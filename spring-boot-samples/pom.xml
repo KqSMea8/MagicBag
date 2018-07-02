@@ -8,8 +8,10 @@
         <version>2.0.2.RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <groupId>org.github.helixcs</groupId>
     <artifactId>spring-boot-samples</artifactId>
     <packaging>pom</packaging>
+    <version>1.0</version>
     <modules>
         <module>jetty-sample</module>
     </modules>
