@@ -3,7 +3,7 @@
 
     <!--<property resource="${environment.dir}/config-hotelfutureuac-${environment.type}.properties" />-->
     <!--保存路径-->
-    <property name="LOG_PATH" value="/Users/helix/IdeaProjects/MagicBag/spring-boot-samples/jetty-sample/src/main/resources/logs" />
+    <property name="LOG_PATH" value="logs" />
 
     <!-- 控制台输入-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
