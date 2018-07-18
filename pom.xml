@@ -100,7 +100,7 @@
                     <target>${java.version}</target>
                     <encoding>${java.encoding}</encoding>
                     <compilerArguments>
-                        <!--<extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>-->
+                        <!--<extdirs>${project.basedir}/src/org.github.helixcs.kotlin.main/webapp/WEB-INF/lib</extdirs>-->
                     </compilerArguments>
                 </configuration>
             </plugin>

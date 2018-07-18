@@ -1,3 +1,5 @@
+package org.github.helixcs.kotlin
+
 import org.apache.commons.codec.digest.DigestUtils
 
 /**
@@ -85,9 +87,9 @@ fun main(args: Array<String>) {
     var plainText = "HelloWorld 你好世界"
     var key = initKey()
     println("key is $key")
-    var encodingData = desEncode(data = plainText,key = key!!)
+    var encodingData = desEncode(data = plainText, key = key!!)
     println("encoding text is : $encodingData")
-    var decodingData = desDecode(encodingData = encodingData!!,key = key)
+    var decodingData = desDecode(encodingData = encodingData!!, key = key)
     print("decoding string is $decodingData")
 
 }

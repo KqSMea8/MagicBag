@@ -1,5 +1,8 @@
+package org.github.helixcs.java;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
+import org.github.helixcs.kotlin.DigestUtilKt;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
