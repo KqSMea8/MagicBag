@@ -1,8 +1,5 @@
 package org.github.helixcs.java;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
-import javax.management.relation.RoleUnresolved;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +7,8 @@ import java.util.List;
 /**
  * @Author: Helixcs
  * @Time:7/18/18
+ *
+ * 简易线程池实现
  */
 public class SimulatedThreadPool {
 
@@ -69,7 +68,6 @@ public class SimulatedThreadPool {
                        r=  workQueue.remove(0);
                     }
                 }
-
                 if(r!=null){
                     r.run();
                 }
