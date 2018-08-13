@@ -1,5 +1,12 @@
 package org.github.helixcs.java.desgin;
 
+/**
+ * 单例实现
+ * @See https://www.zhihu.com/question/35268028
+ * @See http://www.infoq.com/cn/articles/java-memory-model-4
+ * @See http://agilestyle.iteye.com/blog/2359969
+ * @See http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency
+ */
 public class SingletonImplement {
     public static void main(String[] args) {
         LazySingletonWithDoubleCheck lazySingletonWithDoubleCheck1 = LazySingletonWithDoubleCheck.getInstance();
