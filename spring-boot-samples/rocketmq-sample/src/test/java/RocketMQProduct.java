@@ -15,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 public class RocketMQProduct {
     public static void main(String[] args) throws MQClientException, UnsupportedEncodingException, RemotingException, InterruptedException, MQBrokerException {
         DefaultMQProducer producer = new DefaultMQProducer("p1");
+        producer.setVipChannelEnabled(false);
         producer.setNamesrvAddr("192.168.31.174:9876");
         producer.start();
 
