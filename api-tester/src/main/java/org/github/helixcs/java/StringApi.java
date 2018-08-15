@@ -49,6 +49,7 @@ public class StringApi {
     public static void main(String[] args) {
 //        stringReMatch();
 //        stringSplit();
-        System.out.println(paddingString("zha","+",10,false));
+//        System.out.println(paddingString("zha","+",10,false));
+        System.out.println("sdsas".concat("fsad"));
     }
 }
