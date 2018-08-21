@@ -12,10 +12,18 @@ import java.util.List;
  * @Author: Helixcs
  * @Time:8/12/18
  * 生产者
+ *
+ * 消息一致性
+ * @See  https://blog.csdn.net/chunlongyu/article/details/53844393
+ * 消息有一个应答处理的，如果你处理失败你就返回失败告诉mq，mq会重发消息，如果你这个处理逻辑复杂并很耗时间，那么先把消息数据入库，然后再搞一个job去扫描落库的数据
+ *
+ *
+ *
+ *
  */
 public class MQProducer {
 
-    private static final  String nameSrvAddr = "192.168.31.174:9876";
+    private static final  String nameSrvAddr = "30.11.22.16:9876";
 
     // 短信发送
     private static  void syncProducerSendMsg() throws  Exception {
@@ -107,7 +115,7 @@ public class MQProducer {
                     int index = id % mqs.size();
                     return mqs.get(index);
                 }
-            },orderId);
+        },orderId);
 
             System.out.printf("%s%n", sendResult);
         }
@@ -120,6 +128,8 @@ public class MQProducer {
 //        syncProducerSendMsg();
 
 //        asyncProducerSendMsg();
-        oneWaySendMsg();
+//        oneWaySendMsg();
+
+        orderProducer();
     }
 }
