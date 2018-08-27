@@ -22,7 +22,7 @@ public class SingletonImplement {
 // double check 实现单例, 在类加载时，getInstance() 不会加载，在调用时才会加载，这种加载称为懒加载
 // double check 防止 new LazySingletonWithDoubleCheck() 时指令重排
 class LazySingletonWithDoubleCheck{
-    private static  LazySingletonWithDoubleCheck lazySingleton;
+    private static  volatile  LazySingletonWithDoubleCheck lazySingleton;
     private LazySingletonWithDoubleCheck(){}
     public static LazySingletonWithDoubleCheck getInstance(){
         System.out.println("LazySingletonWithDoubleCheck loading ...");
