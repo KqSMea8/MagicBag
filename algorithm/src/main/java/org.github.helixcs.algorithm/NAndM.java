@@ -15,6 +15,38 @@ import java.util.*;
  * @Time:9/1/18
  */
 public class NAndM {
+    // 支持Set 的 list
+    static  class MyList<E> extends ArrayList<E> implements Comparable<E>{
+        private E e;
+
+        private MyList(){}
+
+        private MyList(E... es){
+            this.addAll(Arrays.asList(es));
+        }
+
+        // 0-替换父节点 1-插入右节点 -1 - 插入左节点
+        @Override
+        public int compareTo(E otherE) {
+
+            if(null==otherE){return 1;}
+            if(otherE==this||otherE.equals(this)){return 0;}
+            if(otherE instanceof  List){
+                List otherList = (List) otherE;
+                List eList = this;
+
+                if(otherList.size()!=eList.size()){return 1;}
+                int size = eList.size();
+                for(int i = 0;i<size;i++){
+                    if(otherList.get(i).equals(eList.get(i))){
+                        return 0;
+                    }
+                }
+                return 1;
+            }
+            return 1;
+        }
+    }
 
     private static List<List> nm(List<Integer> integers , Integer target){
         List<List> finalList=  new ArrayList<>();

@@ -1,7 +1,6 @@
 package org.github.helixcs.algorithm;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class TreeMapImplement {
     // Red-black mechanics
@@ -78,5 +77,53 @@ public class TreeMapImplement {
     }
     static final boolean valEquals(Object o1, Object o2) {
         return (o1==null ? o2==null : o1.equals(o2));
+    }
+
+
+    static  class MyList<E> extends ArrayList<E> implements Comparable<E>{
+        private E e;
+
+        private MyList(){}
+
+        private MyList(E... es){
+           this.addAll(Arrays.asList(es));
+        }
+
+        @Override
+        public int compareTo(E otherE) {
+
+            if(null==otherE){return 1;}
+            if(otherE==this||otherE.equals(this)){return 0;}
+            if(otherE instanceof  List){
+                List otherList = (List) otherE;
+                List eList = this;
+
+                if(otherList.size()!=eList.size()){return 1;}
+                int size = eList.size();
+                for(int i = 0;i<size;i++){
+                    if(otherList.get(i).equals(eList.get(i))){
+                        return 0;
+                    }
+                }
+                return 1;
+            }
+            return 1;
+        }
+    }
+
+    public static void main(String[] args) {
+
+
+        Set<List> set  = new TreeSet<>();
+        List<Integer> a = new MyList<>(1);
+        List<Integer> b = new MyList<>(2);
+        List<Integer> c = new MyList<>(2);
+        List<Integer> d = new MyList<>(3);
+        set.add(a);
+        set.add(b);
+        set.add(c);
+        set.add(d);
+        System.out.println(set);
+
     }
 }
