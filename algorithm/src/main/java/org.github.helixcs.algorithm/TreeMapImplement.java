@@ -1,5 +1,7 @@
 package org.github.helixcs.algorithm;
 
+import apple.laf.JRSUIUtils;
+
 import java.util.*;
 
 public class TreeMapImplement {
@@ -80,50 +82,78 @@ public class TreeMapImplement {
     }
 
 
-    static  class MyList<E> extends ArrayList<E> implements Comparable<E>{
+
+    private static  TreeStructure root;
+
+    static class TreeStructure<E extends String> {
         private E e;
+        private TreeStructure<E> left;
+        private TreeStructure<E> right;
+        private TreeStructure<E> parent;
+        public TreeStructure(){}
 
-        private MyList(){}
-
-        private MyList(E... es){
-           this.addAll(Arrays.asList(es));
+        public TreeStructure(E e){
+            this.e = e;
+        }
+        public TreeStructure(E e, TreeStructure parent){
+            this.e = e;
+            this.parent = parent;
         }
 
-        @Override
-        public int compareTo(E otherE) {
+        public TreeStructure(E e, TreeStructure<E> left, TreeStructure<E> right, TreeStructure<E> parent) {
+            this.e = e;
+            this.left = left;
+            this.right = right;
+            this.parent = parent;
+        }
 
-            if(null==otherE){return 1;}
-            if(otherE==this||otherE.equals(this)){return 0;}
-            if(otherE instanceof  List){
-                List otherList = (List) otherE;
-                List eList = this;
+        public E getE() {
+            return e;
+        }
+        public TreeStructure<E> getLeft() {
+            return left;
+        }
 
-                if(otherList.size()!=eList.size()){return 1;}
-                int size = eList.size();
-                for(int i = 0;i<size;i++){
-                    if(otherList.get(i).equals(eList.get(i))){
-                        return 0;
-                    }
-                }
-                return 1;
+        public TreeStructure<E> getRight() {
+            return right;
+        }
+
+        public TreeStructure<E> getParent() {
+            return parent;
+        }
+        public void add(TreeStructure node){
+            TreeStructure<E> t = root;
+            int cmp;
+            TreeStructure parent;
+
+            if(t==null){
+                root = node;
+                return;
             }
-            return 1;
+            String currentValue = node.e;
+
+            do{
+                parent = t;
+                cmp = currentValue.compareTo(t.e);
+                if(cmp>1){
+                    t =t.right;
+                }else if(cmp<1){
+                    t = t.left;
+                }else {
+                    break;
+                }
+            }
+            while (t!=null);
+
+            TreeStructure ts = new TreeStructure<>(node.e,parent);
+            if(cmp<0){
+                parent.left = ts;
+            }else {
+                parent.right = ts;
+            }
+            System.out.println("");
+            return;
         }
-    }
-
-    public static void main(String[] args) {
-
-
-        Set<List> set  = new TreeSet<>();
-        List<Integer> a = new MyList<>(1);
-        List<Integer> b = new MyList<>(2);
-        List<Integer> c = new MyList<>(2);
-        List<Integer> d = new MyList<>(3);
-        set.add(a);
-        set.add(b);
-        set.add(c);
-        set.add(d);
-        System.out.println(set);
 
     }
 }
