@@ -15,6 +15,7 @@
     <modules>
         <module>jetty-sample</module>
         <module>rocketmq-sample</module>
+        <module>dubbo-client</module>
     </modules>
 
     <dependencies>
@@ -37,6 +38,10 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
         </dependency>
     </dependencies>
 

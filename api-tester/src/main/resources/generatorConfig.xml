@@ -58,8 +58,8 @@
         </javaClientGenerator>
 
         <!--对应数据库表 mysql可以加入主键自增 字段命名 忽略某字段等-->
-        <table schema="" tableName="hotel_room_rel" domainObjectName="HotelRoomRel"
-               delimitIdentifiers="true" delimitAllColumns="true"
+        <table schema="" tableName="pre_authorization_alipay_order" domainObjectName="PreAuthorizationAlipayOrderPO"
+               delimitIdentifiers="false" delimitAllColumns="true"
                enableSelectByExample="false"
                enableDeleteByExample="false"
                enableCountByExample="false"
