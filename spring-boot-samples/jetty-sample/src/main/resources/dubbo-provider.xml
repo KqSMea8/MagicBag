@@ -3,12 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="psbuac-consumer"/>
+    <dubbo:application name="dubboSayHello"/>
+    <!--关闭启动时检查所有服务-->
+    <dubbo:consumer check="false"/>
     <!--组播-->
-    <!--<dubbo:registry address="multicast://192.168.31.101:1234" />-->
-    <dubbo:registry address="zookeeper://192.168.31.101:2181" protocol="zookeeper"/>
-    <dubbo:protocol name="dubbo" port="20880" />
-    <dubbo:service interface="org.helixcs.springboot.samples.dubboclient.SayHelloInterface"
-                   ref="sayHelloImpl" />
+    <dubbo:registry address="zookeeper://192.168.31.101:2181" check="false"/>
+    <dubbo:protocol name="dubbo"  host="0.0.0.0" port="20880"/>
+    <dubbo:service id="dubboSayHelloImplProvider"
+                   interface="org.helixcs.springboot.samples.dubboclient.SayHelloInterface"
+                   ref="dubboSayHelloImpl"
+                   timeout="10000" />
     <!--<dubbo:reference id="demoServiceRemote" interface="com.alibaba.dubbo.demo.DemoService" />-->
 </beans>
