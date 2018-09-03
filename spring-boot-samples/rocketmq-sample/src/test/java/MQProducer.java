@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class MQProducer {
 
-    private static final  String nameSrvAddr = "30.11.22.16:9876";
+    private static final  String nameSrvAddr = "35.235.73.9:9876";
 
     // 短信发送
     private static  void syncProducerSendMsg() throws  Exception {
