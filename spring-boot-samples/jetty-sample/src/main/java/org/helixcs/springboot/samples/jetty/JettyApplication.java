@@ -5,8 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication(scanBasePackages = "org.helixcs.springboot.samples.jetty")
-@ImportResource("dubbo-provider.xml")
+@ImportResource(value = {"all_in_one.xml"})
 public class JettyApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(JettyApplication.class,args);
     }
