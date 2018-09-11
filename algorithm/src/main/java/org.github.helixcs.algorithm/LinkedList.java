@@ -37,6 +37,7 @@ public class LinkedList<T> implements Serializable {
         }
     }
 
+    // 链尾
     public void linkLast(T data){
         LinkNode<T> currentNode = new LinkNode<>(data);
         if(null==this.head){
@@ -48,6 +49,7 @@ public class LinkedList<T> implements Serializable {
         }
     }
 
+    // 打印每个节点
     private void print(){
         LinkNode h = this.head;
         while (h!=null){
@@ -57,6 +59,7 @@ public class LinkedList<T> implements Serializable {
     }
 
 
+    // 逆置
     public LinkNode myReverse(LinkNode currentNode){
         LinkNode preNode = null, nextNode = null;
         while (currentNode!=null){
@@ -65,8 +68,7 @@ public class LinkedList<T> implements Serializable {
             preNode  = currentNode;
             currentNode = nextNode;
         }
-        LinkNode tmpNode = new LinkNode();
-        tmpNode =  this.head;
+        LinkNode tmpNode =  this.head;
         this.head = this.tail;
         this.tail = tmpNode;
         return preNode;
@@ -146,9 +148,8 @@ public class LinkedList<T> implements Serializable {
         a.linkLast("a");
         a.linkLast("b");
         a.linkLast("c");
-        System.out.println(a.myReverse(a.head).data);
+        a.myReverse(a.head);
 
-        System.out.println();
-
+        a.print();
     }
 }
