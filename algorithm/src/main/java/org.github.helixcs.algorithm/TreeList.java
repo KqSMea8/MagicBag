@@ -41,10 +41,11 @@ public class TreeList<T extends Comparable> {
         }
     }
 
-    TreeNode root;
+    TreeNode<T> root;
 
 
     private TreeNode<T> addWithRecursive(TreeNode<T> currentNode , T value){
+        // 当根节点为空，返回新的根节点
         if(currentNode==null){return new TreeNode(value);}
         int cmp= currentNode.data.compareTo(value);
         if(cmp>0){
@@ -65,10 +66,10 @@ public class TreeList<T extends Comparable> {
             return true;
         }
         else if(cmp>0){
-            findWithRecursive(currentNode.left, value);
+            return findWithRecursive(currentNode.left, value);
         }
         else if(cmp<0){
-            findWithRecursive(currentNode.right,value);
+            return findWithRecursive(currentNode.right,value);
         }
         return false;
     }
@@ -93,7 +94,7 @@ public class TreeList<T extends Comparable> {
         bt.add(7);
         bt.add(9);
 
-        boolean exist = bt.find(3);
+        boolean exist = bt.find(6);
 
         System.out.println(exist);
     }
