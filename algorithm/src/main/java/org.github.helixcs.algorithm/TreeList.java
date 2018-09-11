@@ -74,6 +74,22 @@ public class TreeList<T extends Comparable> {
         return false;
     }
 
+    // 遍历获取最小值
+    private int findSmallest(){
+        TreeNode<Integer> t = (TreeNode<Integer>) root;
+        while (t.left!=null){
+            t= t.left;
+        }
+        return t.data;
+    }
+
+    private int findSmallestWithRecursive(TreeNode<Integer> integerTreeNode){
+        if(integerTreeNode.left!=null){
+            return findSmallestWithRecursive(integerTreeNode.left);
+        }
+        return integerTreeNode.data;
+    }
+
 
     private void add(T data){
          this.root = addWithRecursive(this.root,data);
@@ -96,6 +112,8 @@ public class TreeList<T extends Comparable> {
 
         boolean exist = bt.find(6);
 
+        int smallestValue = bt.findSmallestWithRecursive(bt.root);
         System.out.println(exist);
+        System.out.println(smallestValue);
     }
 }
