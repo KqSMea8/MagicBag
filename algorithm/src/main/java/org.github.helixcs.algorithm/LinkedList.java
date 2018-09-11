@@ -24,24 +24,71 @@ public class LinkedList<T> implements Serializable {
     }
 
     // 链尾节点
-    public  void addTail(T data){
-        if(null==this.getHead()){
-            this.head  = new LinkNode<T>(data);
-            if(null==this.getTail()){
+    public  void addTail(T data) {
+        if (null == this.getHead()) {
+            this.head = new LinkNode<T>(data);
+            if (null == this.getTail()) {
                 this.tail = head;
             }
-        }else {
+        } else {
             LinkNode<T> currentNode = new LinkNode<T>(data);
             this.tail.next = currentNode;
             this.tail = currentNode;
         }
     }
 
-    private void print(){
-        this.getHead();
-
-
+    public void linkLast(T data){
+        LinkNode<T> currentNode = new LinkNode<>(data);
+        if(null==this.head){
+            this.head= currentNode;
+            this.tail = this.head;
+        }else {
+            this.tail.next = currentNode;
+            this.tail = currentNode;
+        }
     }
+
+    private void print(){
+        LinkNode h = this.head;
+        while (h!=null){
+            System.out.println(h.data);
+            h = h.next;
+        }
+    }
+
+
+    public LinkNode myReverse(LinkNode currentNode){
+        LinkNode preNode = null, nextNode = null;
+        while (currentNode!=null){
+            nextNode = currentNode.next;
+            currentNode.next = preNode;
+            preNode  = currentNode;
+            currentNode = nextNode;
+        }
+        LinkNode tmpNode = new LinkNode();
+        tmpNode =  this.head;
+        this.head = this.tail;
+        this.tail = tmpNode;
+        return preNode;
+    }
+
+    public LinkNode reverse(LinkNode current) {
+        //initialization
+        LinkNode previousNode = null;
+        LinkNode nextNode = null;
+
+        while (current != null) {
+            //save the next node
+            nextNode = current.next;
+            //update the value of "next"
+            current.next = previousNode;
+            //shift the pointers
+            previousNode = current;
+            current = nextNode;
+        }
+        return previousNode;
+    }
+
 
 
     public LinkNode getHead() {
@@ -74,6 +121,9 @@ public class LinkedList<T> implements Serializable {
             this.data = data;
         }
 
+        public LinkNode(){
+        }
+
         public LinkNode getNext() {
             return next;
         }
@@ -93,11 +143,12 @@ public class LinkedList<T> implements Serializable {
 
     public static void main(String[] args) {
         LinkedList<String> a = new LinkedList<>();
-        a.addHead("a");
-        a.addHead("b");
-        a.addHead("c");
-        System.out.println(a.getTail().data);
+        a.linkLast("a");
+        a.linkLast("b");
+        a.linkLast("c");
+        System.out.println(a.myReverse(a.head).data);
 
+        System.out.println();
 
     }
 }
