@@ -54,17 +54,6 @@ public class StringApi {
 
     private static final String psbConfigString = "[{\"key\":\"url\",\"value\":\"http://www.haikouhotel.net:29090/post\",\"explain\":\"大河服务器地址\"},{\"key\":\"hotelCode\",\"value\":\"\",\"explain\":\"旅馆代码\"},{\"key\":\"key\",\"value\":\"\",\"explain\":\"密钥\"}]";
 
-    public static  String getConfig(String conf){
-
-        conf = StringUtils.replace(conf,"[{\"key\":", "{");
-        conf = StringUtils.replaceAll(conf,",\"explain\":\".{0,20}\"},\\{\"key\":", ",");
-        conf = StringUtils.replaceAll(conf,",\"explain\":\".{0,20}\"}]", "}");
-        conf = StringUtils.replace(conf,"},{\"key\":", ",");
-        conf = StringUtils.replace(conf,",\"value\"", "");
-        conf = StringUtils.replace(conf,"]", "");
-
-        return conf;
-    }
     private static String getConfig(String config, String json){
         List<JSONObject> jsonArray = JSONArray.parseArray(psbConfigString,JSONObject.class);
         JSONObject resultJson = new JSONObject();
@@ -82,7 +71,6 @@ public class StringApi {
     public static void main(String[] args) {
 
         System.out.println(getConfig(psbConfigString,""));
-        System.out.println(getConfig(psbConfigString));
 //        stringReMatch();
 //        stringSplit();
 //        System.out.println(paddingString("zha","+",10,false));
