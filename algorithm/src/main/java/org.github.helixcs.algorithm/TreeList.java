@@ -5,6 +5,7 @@ package org.github.helixcs.algorithm;
  * @Author: helix
  * @Time:9/11/18
  * @Site: http://iliangqunru.bitcron.com/
+ * @See :http://threezj.com/2016/03/20/%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E4%B9%8B%E9%A1%BA%E5%BA%8F%E3%80%81%E4%BA%8C%E5%88%86%E3%80%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E3%80%81%E7%BA%A2%E9%BB%91%E6%A0%91%20%E8%AF%A6%E7%BB%86%E6%AF%94%E8%BE%83%E6%80%BB%E7%BB%93/
  */
 public class TreeList<T extends Comparable> {
 
@@ -73,6 +74,15 @@ public class TreeList<T extends Comparable> {
         return false;
     }
 
+    private int getDeepth(TreeNode<T> currentNode){
+        if(currentNode==null){return 0;}
+        int left = getDeepth(currentNode.left);
+        int right =  getDeepth(currentNode.right);
+        if(left==right){return left+1;}
+        else if(left>right){return left+1;}
+        else {return right+1;}
+    }
+
     // 遍历获取最小值
     private int findSmallest(){
         TreeNode<Integer> t = (TreeNode<Integer>) root;
@@ -108,11 +118,16 @@ public class TreeList<T extends Comparable> {
         bt.add(5);
         bt.add(7);
         bt.add(9);
+        bt.add(11);
 
         boolean exist = bt.find(6);
 
         int smallestValue = bt.findSmallestWithRecursive(bt.root);
+
+        int deepth = bt.getDeepth(bt.root);
+
         System.out.println(exist);
         System.out.println(smallestValue);
+        System.out.println(deepth);
     }
 }

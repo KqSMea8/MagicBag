@@ -13,6 +13,7 @@
         <module>spring-boot-samples</module>
         <module>algorithm</module>
         <module>api-tester</module>
+        <module>netty</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
