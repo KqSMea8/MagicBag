@@ -33,12 +33,14 @@ public class SocketChannelSample {
 
     private static void testOpen() throws  Exception{
         SocketChannel socketChannel = SocketChannel.open();
-        socketChannel.connect(new InetSocketAddress("http://jenkov.com", 80));
+        socketChannel.connect(new InetSocketAddress("http://sina.cn", 80));
+
 
     }
 
     public static void main(String[] args) throws Exception {
-        SocketChannelSample socketChannelSample= new SocketChannelSample();
-        socketChannelSample.initServer(9999);
+//        SocketChannelSample socketChannelSample= new SocketChannelSample();
+//        socketChannelSample.initServer(9999);
+        testOpen();
     }
 }
