@@ -44,6 +44,7 @@ public class TreeList<T extends Comparable> {
     TreeNode<T> root;
 
 
+    @SuppressWarnings("unchecked")
     private TreeNode<T> addWithRecursive(TreeNode<T> currentNode , T value){
         // 当根节点为空，返回新的根节点
         if(currentNode==null){return new TreeNode(value);}
@@ -59,6 +60,7 @@ public class TreeList<T extends Comparable> {
 
     }
 
+    @SuppressWarnings("unchecked")
     private boolean findWithRecursive(TreeNode<T> currentNode, T value){
         if(null==currentNode){return false;}
         int cmp = currentNode.data.compareTo(value);
