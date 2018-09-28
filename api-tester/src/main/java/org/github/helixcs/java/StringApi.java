@@ -68,9 +68,19 @@ public class StringApi {
         }
         return resultJson.toJSONString();
     }
+
+    private static String getConfig(String config){
+        List<JSONObject> jsonArray = JSONArray.parseArray(psbConfigString,JSONObject.class);
+        JSONObject resultJson = new JSONObject();
+        for(JSONObject jsonObject:jsonArray){
+            resultJson.put(jsonObject.getString("key"),jsonObject.getString("value"));
+        }
+        return resultJson.toJSONString();
+    }
     public static void main(String[] args) {
 
         System.out.println(getConfig(psbConfigString,""));
+        System.out.println(getConfig(psbConfigString));
 //        stringReMatch();
 //        stringSplit();
 //        System.out.println(paddingString("zha","+",10,false));
