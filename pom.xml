@@ -29,6 +29,7 @@
         <dubbo.version>2.4.9</dubbo.version>
         <httpcomponents.version>4.5.6</httpcomponents.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
+        <tinypinyin.version>2.0.3</tinypinyin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -149,6 +150,12 @@
                 <groupId>commons-httpclient</groupId>
                 <artifactId>commons-httpclient</artifactId>
                 <version>${commons-httpclient.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.promeg</groupId>
+                <artifactId>tinypinyin</artifactId>
+                <version>${tinypinyin.version}</version>
             </dependency>
 
         </dependencies>
