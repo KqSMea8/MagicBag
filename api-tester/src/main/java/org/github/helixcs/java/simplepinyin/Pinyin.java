@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 public final class Pinyin {
 
@@ -217,11 +218,69 @@ public final class Pinyin {
         return handleMatrix(matrix, outList);
     }
 
-    private static List<String> handleMatrix(List<String[]> addString, List<String> sourceString) {
+    private static final String SPLIT_SEP = ",";
+
+    public static List<String> getDuoYinStringWithMaxMatch(final String s, int maxMatch) {
+        if (s == null || s.trim().length() < 1) {
+            return Arrays.asList(new String[0]);
+        }
+        char[] chars = s.toCharArray();
+
+        List<String[]> matrix = new ArrayList<>();
+        for (char c : chars) {
+            matrix.add(toPinyin(c, LOW_CASE));
+        }
+        List<String> outList = new ArrayList<>();
+        return handleMatrixWithMaxMatch(matrix, outList, matrix.size(), 0, maxMatch)
+                .stream()
+                .map(x -> x.replace(",", "")).collect(Collectors.toList());
+    }
+
+    private static List<String> handleMatrixWithMaxMatch(List<String[]> addString, List<String> sourceString, final int ensureCount, int goodItem, int maxMatch) {
         addString = new CopyOnWriteArrayList<>(addString);
         sourceString = new CopyOnWriteArrayList<>(sourceString);
         if (addString.size() == 0 || addString.get(0).length == 0) {
-            return sourceString ;
+            return sourceString;
+        }
+        if (sourceString.size() == 0) {
+            sourceString = new ArrayList<>(addString.get(0).length);
+            sourceString.addAll(Arrays.asList(addString.get(0)));
+        } else {
+            for (String oldString : sourceString) {
+                for (String addTemp : addString.get(0)) {
+                    String ns = oldString + SPLIT_SEP + addTemp;
+
+                    sourceString.add(ns);
+                    sourceString.remove(oldString);
+
+                    int splitSize = ns.split(SPLIT_SEP).length;
+                    if (splitSize >= ensureCount) {
+                        goodItem++;
+                    }
+
+                    if (goodItem >= maxMatch) {
+                        // remove unused item
+                        for (String s : sourceString) {
+                            int ssize = s.split(SPLIT_SEP).length;
+                            if (ssize < ensureCount) {
+                                sourceString.remove(s);
+                            }
+                        }
+                        return sourceString;
+                    }
+                }
+            }
+        }
+        return handleMatrixWithMaxMatch(addString.subList(1, addString.size()), sourceString, ensureCount, 0, maxMatch);
+
+    }
+
+    private static List<String> handleMatrix(List<String[]> addString, List<String> sourceString) {
+        addString = new CopyOnWriteArrayList<>(addString);
+        sourceString = new CopyOnWriteArrayList<>(sourceString);
+
+        if (addString.size() == 0 || addString.get(0).length == 0) {
+            return sourceString;
         }
         if (sourceString.size() == 0) {
             sourceString = new ArrayList<>(addString.get(0).length);

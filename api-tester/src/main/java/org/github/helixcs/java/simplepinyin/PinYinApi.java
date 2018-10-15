@@ -13,7 +13,6 @@ import java.util.*;
 public class PinYinApi {
 
 
-
     public static List<String> spendString(List<String[]> addString, List<String> sourceString) {
         if (addString.size() == 0 || addString.get(0).length == 0) {
             return sourceString;
@@ -78,7 +77,17 @@ public class PinYinApi {
         System.out.println(success4JList.size());
         System.out.println(success4JList);
 
-        String s = "於佳佳";
+        // 多音字
+        System.out.println("===> 多音字");
+        String s = "於红红";
         System.out.println(Pinyin.getDuoYinString(s));
+        System.out.println(Pinyin.getDuoYinStringWithMaxMatch(s, 2));
+        assert Pinyin.getDuoYinStringWithMaxMatch(s, 2).size() == 2;
+
+        String s1 = "於佳佳";
+        System.out.println(Pinyin.getDuoYinString(s1));
+        System.out.println(Pinyin.getDuoYinStringWithMaxMatch(s1, 1));
+        assert Pinyin.getDuoYinStringWithMaxMatch(s1, 5).size() == 2;
+
     }
 }
