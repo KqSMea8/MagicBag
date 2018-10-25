@@ -11,5 +11,30 @@
 
     <artifactId>dubbo-client</artifactId>
 
+    <description>dubbo client</description>
+    <properties>
+        <java.version>1.8</java.version>
+        <java.encoding>utf-8</java.encoding>
+        <start-class>org.helixcs.springboot.samples.dubboclient.ClientMain</start-class>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

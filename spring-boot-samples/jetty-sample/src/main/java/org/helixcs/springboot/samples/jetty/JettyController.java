@@ -1,6 +1,6 @@
 package org.helixcs.springboot.samples.jetty;
 
-import org.helixcs.springboot.samples.dubboclient.SayHelloInterface;
+//import org.helixcs.springboot.samples.dubboclient.SayHelloInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,8 @@ public class JettyController {
     private static final Logger jettyLog = LoggerFactory.getLogger("jettyLog");
     @Resource
     private HelloServiceImpl helloService;
-    @Resource
-    private SayHelloInterface dubboSayHelloImpl;
+//    @Resource
+//    private SayHelloInterface dubboSayHelloImpl;
 
     @GetMapping("/")
     @ResponseBody
@@ -28,10 +28,10 @@ public class JettyController {
     }
 
 
-    @GetMapping("dubbo/sayHello")
-    @ResponseBody
-    public String dubboSayHello(){
-        return dubboSayHelloImpl.sayHello("");
-    }
+//    @GetMapping("dubbo/sayHello")
+//    @ResponseBody
+//    public String dubboSayHello(){
+//        return dubboSayHelloImpl.sayHello("");
+//    }
 
 }

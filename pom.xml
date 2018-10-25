@@ -14,7 +14,6 @@
         <module>algorithm</module>
         <module>api-tester</module>
         <module>netty</module>
-        <module>google</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
