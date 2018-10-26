@@ -30,7 +30,21 @@ fun generateResultFunction(result: Int, status: Status): Result {
     return Result(result, status)
 }
 
+fun printLoop() {
+    for ((k, v) in onlyReadMap) {
+        println("$k --> $v")
+    }
+}
 
+fun whenSample(code:Int):String?{
+    when(code){
+        is 1 -> return "One"
+        is 2 -> return  "Two"
+        else -> return "Default"
+
+    }
+
+}
 fun main(args: Array<String>) {
     numbers.add(12)
 
@@ -44,4 +58,6 @@ fun main(args: Array<String>) {
 
     val (result, status) = generateResultFunction(1, Status.SUCCESS)
     println("$result , $status")
+
+    printLoop()
 }
