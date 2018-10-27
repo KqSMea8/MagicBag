@@ -36,15 +36,102 @@ fun printLoop() {
     }
 }
 
-fun whenSample(code:Int):String?{
-    when(code){
-        is 1 -> return "One"
-        is 2 -> return  "Two"
-        else -> return "Default"
+// control flow
+//if expression
+
+fun if_expression() {
+    var max = 0
+    val a = 1
+    val b = 2
+
+    if (a > b) {
+        max = a
+    } else {
+        max = b
+    }
+    println("traditional max is $max")
+
+    max = if (a > b) {
+        println("a is $a")
+        a
+    } else {
+        println("b is $b")
+        b
+    }
+
+    max = if (a > b) a else b
+
+    println("as expression max is $max")
+
+
+}
+
+fun when_expression(code: Int) {
+    var result = ""
+    when (code) {
+        1 -> result = "One"
+        2 -> result = "Two"
+        3, 4 -> {
+            result = "3,4"
+        }
+        else -> result = "Default"
+    }
+
+    println("when expression is $result")
+}
+
+// for loops
+
+fun for_loops() {
+    val a = arrayListOf<Int>(1, 2, 43, 43, 53, 3, 3, 3, 9)
+    for (item in a)
+        println(item)
+
+    for (item: Int in a)
+        println(item)
+
+    for (i in a.indices)
+        println("$i --> ${a[i]}")
+
+    for ((index, value) in a.withIndex())
+        println("$index --> $value")
+}
+
+
+// return and jump
+
+class Person1(val name: String, val age: Int? = 10)
+
+fun return_and_jump() {
+    val p1: Person1 = Person1("zhangsan", 11)
+    println("name is ${p1.name}, age is ${p1.age}")
+
+    loop@
+    for (i in 1..100) {
+        for (j in 1..100) {
+            println("j is $j")
+            if (j == 10) break@loop
+        }
+    }
+
+
+    run loop@{
+        listOf(1, 3, 4, 5, "da").forEach {
+            if (it == 5)
+                return@loop
+            println(it)
+        }
 
     }
 
+
+    listOf(1, 242, 43, 53, 54).forEach(fun(v: Int) {
+        println(v)
+    })
 }
+
+// class and inheritance
+
 fun main(args: Array<String>) {
     numbers.add(12)
 
@@ -60,4 +147,16 @@ fun main(args: Array<String>) {
     println("$result , $status")
 
     printLoop()
+
+    // test if
+    if_expression()
+
+    // test when
+    when_expression(11)
+
+    // test for
+    for_loops()
+
+    // test return and jump
+    return_and_jump()
 }
