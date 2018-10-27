@@ -4,6 +4,7 @@ package org.github.helixcs.kotlin
  * @Author: Helixcs
  * @Time:10/26/18
  */
+import kotlinx.coroutines.*
 
 // basic collection
 val numbers: MutableList<Int> = mutableListOf(1, 2, 4)
@@ -132,6 +133,47 @@ fun return_and_jump() {
 
 // class and inheritance
 
+class InitOrderDemo(name: String) {
+    val firstProperty = "first property is $name".also(::println)
+
+    init {
+        println("first init property is $name")
+    }
+
+    val secondProperty = "second property is $name".also(::println)
+
+    init {
+        println("second init property is $name")
+    }
+
+}
+
+class Person2 private constructor(val name: String)
+
+
+open class BaseClass {
+    open fun v() {
+
+    }
+
+    fun nv() {
+
+    }
+}
+
+class Derived() : BaseClass() {
+    final override fun v() {
+        super.v()
+    }
+}
+
+
+// coroutines
+fun corouties_sample(){
+}
+
+
+
 fun main(args: Array<String>) {
     numbers.add(12)
 
@@ -159,4 +201,9 @@ fun main(args: Array<String>) {
 
     // test return and jump
     return_and_jump()
+
+    // test class and inheritance
+    val iod = InitOrderDemo(name = "name")
+
+
 }
