@@ -4,7 +4,6 @@ package org.github.helixcs.kotlin
  * @Author: Helixcs
  * @Time:10/26/18
  */
-import kotlinx.coroutines.*
 
 // basic collection
 val numbers: MutableList<Int> = mutableListOf(1, 2, 4)
@@ -152,6 +151,7 @@ class Person2 private constructor(val name: String)
 
 
 open class BaseClass {
+    open val x: Int = 1
     open fun v() {
 
     }
@@ -165,13 +165,68 @@ class Derived() : BaseClass() {
     final override fun v() {
         super.v()
     }
+
+    override val x: Int get() = super.x + 1
 }
 
+
+// properties and fields
+
+class Address {
+    var name: String = ""
+        get() = if (field == "") "blank" else field
+        set(value) = if (value == "") field = "blank value" else field = value.also { println("==> $value") }
+    var street: String = ""
+        private set
+    var city: String = ""
+    var state: String? = ""
+    var zip: String = ""
+
+}
+
+
+// interface
+interface MyInterface {
+    var prop: Int // abstract
+    fun bar()
+    fun foo() {
+        // optional body
+    }
+}
+
+class Child : MyInterface {
+    override
+    var prop: Int = 1
+
+    override fun bar() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+}
+
+
+// interface inheritance
+interface Named {
+    val name: String
+}
+
+interface Person : Named {
+    val firstName: String
+    val lastName: String
+
+    override val name: String get() = "$firstName , $lastName"
+
+}
+
+data class Employee(
+        override val firstName: String,
+        override val lastName: String
+
+) : Person
 
 // coroutines
-fun corouties_sample(){
+fun corouties_sample() {
 }
-
 
 
 fun main(args: Array<String>) {
@@ -205,5 +260,22 @@ fun main(args: Array<String>) {
     // test class and inheritance
     val iod = InitOrderDemo(name = "name")
 
+    // test superclass implementation
+    val d = Derived()
+    println(d.x)
+
+    // test properties and fields
+    var address = Address()
+    println(address.name)
+    address.name = "helixcs"
+    println(address.name)
+
+    // test interface
+    var myInterface: MyInterface = Child()
+    println("child prop is ${myInterface.prop}")
+
+    // test interface inheritance
+    val employee: Named = Employee(firstName = "zhang", lastName = "jian")
+    println("$employee")
 
 }
