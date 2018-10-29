@@ -1,5 +1,8 @@
 package org.github.helixcs.kotlin
 
+import org.slf4j.LoggerFactory
+import kotlin.reflect.full.declaredMemberProperties
+
 /**
  * @Author: Helixcs
  * @Time:10/26/18
@@ -224,6 +227,40 @@ data class Employee(
 
 ) : Person
 
+
+// test reflect
+
+data class ReflectedClass constructor(val name: String?, val age: Int?)
+
+
+// test logger
+fun <T> loggerFor(clazz: Class<T>) = LoggerFactory.getLogger(clazz)
+
+class LoggerTest {
+    private val LOG = loggerFor(javaClass)
+    private val Logger = LoggerFactory.getLogger(javaClass)
+    fun testPrintLog() {
+        LOG.info("test info log")
+        LOG.debug("test debug log ")
+        LOG.error("test error log")
+        LOG.warn("test warn log")
+    }
+}
+
+fun kotlin_reflect() {
+
+    val reflectedClass: ReflectedClass = ReflectedClass(name = "helixcs", age = 11)
+    val clazz = reflectedClass.javaClass.kotlin
+    val a = clazz.declaredMemberProperties.forEach(::print)
+    println(a)
+//
+//
+//    println("==> simpleName : ${clazz.simpleName}")
+//    println("==> name :${clazz.pro("name")}")
+//    println("==> ages :${clazz.getDeclaredField("age")}")
+
+}
+
 // coroutines
 fun corouties_sample() {
 }
@@ -277,5 +314,13 @@ fun main(args: Array<String>) {
     // test interface inheritance
     val employee: Named = Employee(firstName = "zhang", lastName = "jian")
     println("$employee")
+
+    // test reflector
+    kotlin_reflect()
+
+    // test logger
+    val testLog = LoggerTest()
+    testLog.testPrintLog()
+
 
 }

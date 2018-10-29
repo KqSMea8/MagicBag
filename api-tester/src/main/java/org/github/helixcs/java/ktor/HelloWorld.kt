@@ -8,8 +8,8 @@
 
 package org.github.helixcs.java.ktor
 
+import io.ktor.application.Application
 import io.ktor.application.call
-import io.ktor.http.ContentType
 import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
@@ -22,14 +22,26 @@ import io.ktor.server.netty.Netty
  * @sample :https://ktor.io/quickstart/index.html
  */
 
-fun main(args: Array<String>) {
-    var server = embeddedServer(Netty, port = 8087) {
-        routing {
-            get("/") {
-                call.respondText("Hello World!", ContentType.Text.Html);
-            }
+fun Application.mymodule() {
+    routing {
+        get("/sin") {
+            call.respondText("Ok")
         }
     }
-
-    server.start(wait = true)
 }
+
+fun main(args: Array<String>) {
+    embeddedServer(Netty, 8085, watchPaths = listOf("HelloWorld"), module = Application::mymodule).start()
+}
+//
+//fun main(args: Array<String>) {
+//    var server = embeddedServer(Netty, port = 8085) {
+//        routing {
+//            get("/") {
+//                call.respondText("Hello World!", ContentType.Text.Html);
+//            }
+//        }
+//    }
+//
+//    server.start(wait = true)
+//}
