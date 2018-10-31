@@ -150,12 +150,15 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
+                            <jvmTarget>1.8</jvmTarget>
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                                 <sourceDir>${project.basedir}/src/main/java</sourceDir>
                             </sourceDirs>
                             <args>
+                                <!--开启协程-->
                                 <arg>-Xcoroutines=enable</arg>
+                                <arg>-XXLanguage:+InlineClasses</arg>
                             </args>
                         </configuration>
                     </execution>
@@ -175,7 +178,9 @@
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
                     <args>
+                        <!--开启协程-->
                         <arg>-Xcoroutines=enable</arg>
+                        <arg>-XXLanguage:+InlineClasses</arg>
                     </args>
                 </configuration>
             </plugin>

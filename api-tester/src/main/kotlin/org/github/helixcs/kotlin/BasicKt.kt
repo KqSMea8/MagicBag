@@ -1,5 +1,6 @@
 package org.github.helixcs.kotlin
 
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.full.declaredMemberProperties
 
@@ -229,16 +230,20 @@ data class Employee(
 
 
 // test reflect
+// TODO
 
 data class ReflectedClass constructor(val name: String?, val age: Int?)
 
 
 // test logger
-fun <T> loggerFor(clazz: Class<T>) = LoggerFactory.getLogger(clazz)
+fun <T> loggerFor(clazz: Class<T>?): Logger = LoggerFactory.getLogger(clazz)
 
 class LoggerTest {
+    // first
     private val LOG = loggerFor(javaClass)
+    // second
     private val Logger = LoggerFactory.getLogger(javaClass)
+
     fun testPrintLog() {
         LOG.info("test info log")
         LOG.debug("test debug log ")
@@ -246,6 +251,57 @@ class LoggerTest {
         LOG.warn("test warn log")
     }
 }
+
+// Extension
+
+// @reference at https://kotlinlang.org/docs/reference/extensions.html
+// fun extension
+
+fun MutableList<Int>.swap(index1: Int, index2: Int) {
+    var tmp: Int = this[index1]
+    this[index1] = this[index2]
+    this[index2] = tmp
+}
+
+fun testListExtension() {
+    val l = mutableListOf<Int>(1, 2, 3)
+    l.swap(0, 1)
+    for (index: Int in l.indices)
+        println(l[index])
+}
+
+// fun statically
+
+class C {
+    fun foo() = println("i am foo")
+}
+
+fun C.foo(index: Int?) = println("i am extension fun ,index is $index")
+
+
+// extension properties
+val <T> List<T>.lastIndex: Int
+    get() = size - 1
+
+val <T> Collection<T>.isEmpty: Boolean
+    get() = isEmpty()
+
+fun extensionProperties() {
+    val list = listOf<Int>(1, 2, 43, 54, 5)
+    println(list.isEmpty)
+    println(list.lastIndex)
+
+}
+
+// companion object extension
+
+class MyClass {
+    companion object {}
+}
+
+fun MyClass.Companion.foo() = println("companion object extension")
+
+
 
 fun kotlin_reflect() {
 
@@ -322,5 +378,18 @@ fun main(args: Array<String>) {
     val testLog = LoggerTest()
     testLog.testPrintLog()
 
+    // test fun extension
+    testListExtension()
 
+    // test fun statically
+    val c: C = C()
+    c.foo()
+    c.foo(7)
+
+    // test extension properties
+    extensionProperties()
+
+    // test companion object extension
+    MyClass.foo()
 }
+
