@@ -1,9 +1,5 @@
 package org.github.helixcs.kotlin
 
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.timeunit.TimeUnit
 
 /**
  * @Author: Helixcs
@@ -14,12 +10,17 @@ import kotlinx.coroutines.experimental.timeunit.TimeUnit
  *协程 coroutine 轻量级线程
  */
 
-
+//suspend fun worker(n:Int):Int{
+//    delay(1000L)
+//    return n
+//}
 fun main(args: Array<String>) {
-    launch(CommonPool) {
-        delay(3000L, TimeUnit.MILLISECONDS)
-        println("Hello,")
-    }
-    println("World!")
-    Thread.sleep(5000L)
+
+    // outdated
+//    launch(CommonPool) {
+//        delay(3000L, TimeUnit.MILLISECONDS)
+//        println("Hello,")
+//    }
+//    println("World!")
+//    Thread.sleep(5000L)
 }

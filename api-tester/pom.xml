@@ -121,6 +121,13 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.ktor/ktor-jackson -->
+        <dependency>
+            <groupId>io.ktor</groupId>
+            <artifactId>ktor-gson</artifactId>
+            <version>${ktor.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>
