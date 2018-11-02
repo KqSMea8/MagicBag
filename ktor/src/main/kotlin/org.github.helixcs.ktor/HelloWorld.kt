@@ -6,12 +6,14 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-package org.github.helixcs.java.ktor
+package org.github.helixcs.ktor
 
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.content.resource
+import io.ktor.content.static
 import io.ktor.features.*
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
@@ -24,6 +26,7 @@ import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
+import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import java.text.DateFormat
@@ -45,8 +48,8 @@ fun Application.mymodule() {
     install(CallLogging)
     install(Compression)
     // enable HSTS
-    install(HSTS){
-        includeSubDomains= true
+    install(HSTS) {
+        includeSubDomains = true
     }
     // gson
     install(ContentNegotiation) {
@@ -57,6 +60,12 @@ fun Application.mymodule() {
         }
     }
     install(Routing) {
+        // static resource
+        routing {
+            static("static") {
+                resource("de", "kimonotocat.png")
+            }
+        }
         get("/sin") {
             val uri = call.request.uri
             val queryParameters = call.request.queryParameters.entries()
@@ -86,7 +95,7 @@ fun Application.mymodule() {
             response.header("X-Powered", "ktor")
             //send application.json
             // with se
-            call.respondText("COS 你好世界! | こんにちは世界" ,ContentType.Text.Html.withCharset(Charsets.UTF_8))
+            call.respondText("COS 你好世界! | こんにちは世界", ContentType.Text.Html.withCharset(Charsets.UTF_8))
 
             // send files
 //            call.respondFile(File("C:\\Users\\wb-zj268791\\Downloads\\Go for Python Hackers - Greg Ward.mp4"))
@@ -113,7 +122,8 @@ fun Application.mymodule() {
 
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, 8085, watchPaths = listOf("HelloWorld"), module = Application::mymodule).start()
+    val port: Int = if (System.getenv("PORT").isNullOrBlank()) 8085 else Integer.valueOf(System.getenv("PORT"))
+    embeddedServer(factory = Netty, port = port, watchPaths = listOf("HelloWorld"), module = Application::mymodule).start()
 }
 
 //fun main(args: Array<String>) {
