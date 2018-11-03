@@ -43,6 +43,8 @@ data class Model(val name: String, val items: List<Item>, val date: LocalDate = 
 data class Item(val key: String, val value: String)
 
 val model = Model(name = "root", items = listOf(Item(key = "key1", value = "value1")))
+
+
 fun Application.mymodule() {
     install(DefaultHeaders)
     install(CallLogging)
