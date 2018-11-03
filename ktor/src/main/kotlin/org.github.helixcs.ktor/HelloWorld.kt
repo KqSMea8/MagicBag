@@ -49,6 +49,7 @@ fun Application.mymodule() {
     install(DefaultHeaders)
     install(CallLogging)
     install(Compression)
+    install(ForwardedHeaderSupport)
     // enable HSTS
     install(HSTS) {
         includeSubDomains = true
