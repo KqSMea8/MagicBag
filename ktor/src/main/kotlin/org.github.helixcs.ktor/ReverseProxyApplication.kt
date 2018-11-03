@@ -1,4 +1,4 @@
-package org.github.helixcs.java.ktor
+package org.github.helixcs.ktor
 
 import io.ktor.application.ApplicationCallPipeline
 import io.ktor.application.call
@@ -28,10 +28,11 @@ import org.slf4j.LoggerFactory
 val LOGGER  = LoggerFactory.getLogger("Proxy")
 fun main(args: Array<String>) {
     // Creates a Netty server
-    val server = embeddedServer(Netty, port = 8080) {
+    val port = Integer.valueOf(System.getenv("PORT"))
+    val server = embeddedServer(Netty, port = port) {
         // Creates a new HttpClient
         val client = HttpClient()
-        val wikipediaLang = "en"
+        val wikipediaLang = "zh"
 
         // Let's intercept all the requests at the [ApplicationCallPipeline.Call] phase.
         intercept(ApplicationCallPipeline.Call) {
