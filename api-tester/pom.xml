@@ -11,25 +11,24 @@
 
     <artifactId>api-tester</artifactId>
     <properties>
-        <ktor.version>0.9.3</ktor.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test-junit</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>kotlin-stdlib-common</artifactId>
-                    <groupId>org.jetbrains.kotlin</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.jetbrains.kotlin</groupId>-->
+        <!--<artifactId>kotlin-test-junit</artifactId>-->
+        <!--<scope>test</scope>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<artifactId>kotlin-stdlib-common</artifactId>-->
+        <!--<groupId>org.jetbrains.kotlin</groupId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
@@ -41,7 +40,6 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>${jna.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -84,28 +82,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-core</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-core</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-server-netty</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-apache</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
-
-
         <!--httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -131,15 +107,10 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.ktor/ktor-jackson -->
         <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-gson</artifactId>
-            <version>${ktor.version}</version>
-            <scope>compile</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -165,31 +136,6 @@
                     <debug>true</debug>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <finalName>helloworld</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <archive>
-                        <manifest>
-                            <mainClass>org.github.helixcs.java.ktor.ReverseProxyApplicationKt</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>build-jar-with-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
 
             <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -210,7 +156,7 @@
                             </sourceDirs>
                             <args>
                                 <!--开启协程-->
-                                <arg>-Xcoroutines=enable</arg>
+                                <!--<arg>-Xcoroutines=enable</arg>-->
                                 <arg>-XXLanguage:+InlineClasses</arg>
                             </args>
                         </configuration>
@@ -232,7 +178,7 @@
                     <jvmTarget>1.8</jvmTarget>
                     <args>
                         <!--开启协程-->
-                        <arg>-Xcoroutines=enable</arg>
+                        <!--<arg>-Xcoroutines=enable</arg>-->
                         <arg>-XXLanguage:+InlineClasses</arg>
                     </args>
                 </configuration>

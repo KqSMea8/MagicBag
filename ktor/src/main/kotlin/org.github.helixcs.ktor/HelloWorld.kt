@@ -16,6 +16,7 @@ import io.ktor.content.resource
 import io.ktor.content.static
 import io.ktor.features.*
 import io.ktor.gson.gson
+import io.ktor.html.respondHtml
 import io.ktor.http.ContentType
 import io.ktor.http.withCharset
 import io.ktor.request.queryString
@@ -29,6 +30,7 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import kotlinx.html.*
 import java.text.DateFormat
 import java.time.LocalDate
 
@@ -62,6 +64,7 @@ fun Application.mymodule() {
 
         }
     }
+
     install(Routing) {
         // static resource
         routing {
@@ -107,6 +110,26 @@ fun Application.mymodule() {
 
         get("/json") {
             call.respond(model)
+        }
+
+        get("/htmlDSL") {
+            call.respondHtml {
+                head {
+                    title { +"Async World" }
+                    style(type = ""){}
+                }
+                body {
+                    div {
+                        h1(classes = "html dsl") {
+                            +"HTML DSL"
+                            div(classes = "left") {
+                                img(classes = "img", src = "https://desolate-ravine-49980.herokuapp.com/static/de")
+                            }
+
+                        }
+                    }
+                }
+            }
         }
     }
 

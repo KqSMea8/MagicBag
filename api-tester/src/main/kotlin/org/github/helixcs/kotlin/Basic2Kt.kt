@@ -32,3 +32,4 @@ fun main(args: Array<String>) {
     println(funWithLambda(1, 2, { x, y -> x * y }))
 
 }
+
