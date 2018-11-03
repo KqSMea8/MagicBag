@@ -114,7 +114,9 @@ fun Application.mymodule() {
 
 
 fun main(args: Array<String>) {
-    embeddedServer(Netty, 8085, watchPaths = listOf("HelloWorld"), module = Application::mymodule).start()
+    val port = if(System.getenv("PORT").isNullOrBlank()) 8085 else Integer.valueOf(System.getenv("PORT"))
+
+    embeddedServer(Netty, port = port, watchPaths = listOf("HelloWorld"), module = Application::mymodule).start()
 }
 
 //fun main(args: Array<String>) {

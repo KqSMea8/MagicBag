@@ -104,6 +104,7 @@ fun Application.module() {
 }
 
 fun main(args: Array<String>) {
+    val port:Int = if(System.getenv("PORT").isNullOrBlank()) 8085 else Integer.valueOf(System.getenv("PORT"))
     // Creates a Netty server
     val server = embeddedServer(Netty, port = 8080, watchPaths = listOf("ReverseProxyApplication"),module = Application::module).start()
 }
