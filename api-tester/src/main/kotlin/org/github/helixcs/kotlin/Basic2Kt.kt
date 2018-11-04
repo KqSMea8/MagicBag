@@ -27,7 +27,7 @@ fun funWithLambda(a: Int, b: Int, sum: (Int, Int) -> Int): Int {
 fun funException() {
     try {
         println("try block")
-        val a: Double = (1/0).toDouble()
+        val a: Double = (1 / 0).toDouble()
     } catch (ex: Exception) {
         println("exception block")
         // do nothing
@@ -35,6 +35,29 @@ fun funException() {
         println("finally block")
     }
 }
+
+
+// test lambda
+
+class PersonObject constructor(val name: String, val age: Int)
+
+
+// reference: https://grokonez.com/kotlin-tutorial
+// maxBy
+fun findMaxAgePerson() {
+    val personList = listOf<PersonObject>(
+            PersonObject(name = "zhangsan", age = 11),
+            PersonObject(name = "lisi", age = 20),
+            PersonObject(name = "lisi", age = 33),
+            PersonObject(name = "zhaoliu", age = 33))
+    val p = personList.maxBy { it.age }
+
+    val p2 = personList.minBy(PersonObject::age)
+    println("${p?.age} --> ${p?.name}")
+    println("${p2?.age} --> ${p2?.name}")
+
+}
+
 
 
 fun main(args: Array<String>) {
@@ -45,6 +68,8 @@ fun main(args: Array<String>) {
     println(funWithLambda(1, 2, { x, y -> x + y }))
     println(funWithLambda(1, 2, { x, y -> x * y }))
     funException()
+
+    findMaxAgePerson()
 
 }
 
