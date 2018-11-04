@@ -23,6 +23,20 @@ fun funWithLambda(a: Int, b: Int, sum: (Int, Int) -> Int): Int {
 }
 
 
+// fun with exception
+fun funException() {
+    try {
+        println("try block")
+        val a: Double = (1/0).toDouble()
+    } catch (ex: Exception) {
+        println("exception block")
+        // do nothing
+    } finally {
+        println("finally block")
+    }
+}
+
+
 fun main(args: Array<String>) {
     println(lambdaFun(1, 2))
     println(sum(1, 2))
@@ -30,6 +44,7 @@ fun main(args: Array<String>) {
     println(intToString(1))
     println(funWithLambda(1, 2, { x, y -> x + y }))
     println(funWithLambda(1, 2, { x, y -> x * y }))
+    funException()
 
 }
 
