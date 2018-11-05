@@ -16,7 +16,9 @@ fun distinctMethod() {
             PersonData(name = "apple", age = 11, sex = null),
             PersonData(name = "banana", age = 22, sex = "男"),
             PersonData(name = "cat", age = 29, sex = "female"),
-            PersonData(name = "cat", age = 29, sex = "female")
+            PersonData(name = "cat", age = 29, sex = "female"),
+            PersonData(name = "banana", age = 29, sex = "female")
+
     )
 
     println("==> before distinct")
@@ -27,7 +29,25 @@ fun distinctMethod() {
 
 }
 
+// distinctBy method
+
+fun distinctByMethod(){
+    var personDataList = listOf<PersonData>(
+            PersonData(name = "apple", age = 11, sex = null),
+            PersonData(name = "banana", age = 22, sex = "男"),
+            PersonData(name = "cat", age = 29, sex = "female"),
+            PersonData(name = "cat", age = 29, sex = "female"),
+            PersonData(name = "banana", age = 29, sex = "female"))
+
+    println("==> before distinctBy")
+    personDataList.forEach { element-> println(element) }
+    println("==> after distinctBy")
+    personDataList.distinctBy { it.name }.forEach { element-> println(element) }
+
+}
+
 
 fun main(args: Array<String>) {
     distinctMethod()
+    distinctByMethod()
 }
