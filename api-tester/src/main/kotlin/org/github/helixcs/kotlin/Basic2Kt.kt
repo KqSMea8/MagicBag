@@ -56,8 +56,17 @@ fun findMaxAgePerson() {
     println("${p?.age} --> ${p?.name}")
     println("${p2?.age} --> ${p2?.name}")
 
-}
+    personList.forEach({ element ->
+        println(element)
+    })
 
+    println("===>")
+
+    personList.forEach() { element ->
+        println(element)
+    }
+
+}
 
 
 fun main(args: Array<String>) {
