@@ -4,6 +4,31 @@ package org .github.helixcs.kotlin
 data class PersonData constructor(val name: String, val age: Int, val sex: String?)
 
 
+fun collectionMethod(){
+    // distinct object
+    var personDataList = listOf<PersonData>(
+            PersonData(name = "apple", age = 11, sex = null),
+            PersonData(name = "banana", age = 22, sex = "男"),
+            PersonData(name = "cat", age = 29, sex = "female"),
+            PersonData(name = "cat", age = 29, sex = "female"),
+            PersonData(name = "banana", age = 29, sex = "female")
+
+    )
+
+    println("size() is ${personDataList.size}")
+    println("contains() is ${personDataList.contains(PersonData(name = "dog",age = 11,sex=null))}")
+    println("containsAll() is ${personDataList.containsAll(listOf(PersonData(name = "dog",age = 11,sex = null)))}")
+    println("isEmpty() is ${personDataList.isEmpty()}")
+
+    val iterator = personDataList.iterator()
+    while(iterator.hasNext()){
+        println("next is ${iterator.next()}")
+    }
+
+    for(i in personDataList.indices){
+        println("index : $i --> ${personDataList.get(i)}")
+    }
+}
 // distinct method
 fun distinctMethod() {
     val simpleList = listOf<Int>(1, 1, 32, 42, 43, 3, 1, 432, 35, 3454, 45)
@@ -43,6 +68,7 @@ fun distinctByMethod(){
     personDataList.forEach { element-> println(element) }
     println("==> after distinctBy")
     personDataList.distinctBy { it.name }.forEach { element-> println(element) }
+
 
 }
 
@@ -109,6 +135,7 @@ fun reduceMethod(){
 
 
 fun main(args: Array<String>) {
+    collectionMethod()
     distinctMethod()
     distinctByMethod()
     maxMethod()
