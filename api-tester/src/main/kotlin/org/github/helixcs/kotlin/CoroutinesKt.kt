@@ -9,3 +9,6 @@ package org.github.helixcs.kotlin
  * CPU 密集型: 多进程 -> 多线程
  *协程 coroutine 轻量级线程
  */
+
+fun main(args: Array<String>) {
+}
