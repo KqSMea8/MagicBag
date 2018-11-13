@@ -1,5 +1,9 @@
 package org.github.helixcs.kotlin
 
+import kotlinx.coroutines.experimental.GlobalScope
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+
 
 /**
  * @Author: Helixcs
@@ -11,4 +15,7 @@ package org.github.helixcs.kotlin
  */
 
 fun main(args: Array<String>) {
+    GlobalScope.launch {
+        delay(100L)
+    }
 }
