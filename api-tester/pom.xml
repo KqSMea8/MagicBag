@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>api-tester</artifactId>
+    <version>${magicbox.version}</version>
     <properties>
     </properties>
 

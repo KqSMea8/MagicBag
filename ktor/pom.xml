@@ -117,7 +117,7 @@
     </dependencies>
 
     <build>
-        <finalName>${finalName}</finalName>
+        <finalName>${finalName}-${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

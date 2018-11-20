@@ -11,7 +11,7 @@
     <groupId>org.github.helixcs</groupId>
     <artifactId>spring-boot-samples</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>${magicbox.version}</version>
     <modules>
         <module>jetty-sample</module>
         <module>rocketmq-sample</module>

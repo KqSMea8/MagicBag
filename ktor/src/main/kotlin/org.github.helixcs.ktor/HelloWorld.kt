@@ -18,6 +18,7 @@ import io.ktor.features.*
 import io.ktor.gson.gson
 import io.ktor.html.respondHtml
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.withCharset
 import io.ktor.request.queryString
 import io.ktor.request.uri
@@ -87,7 +88,7 @@ fun Application.mymodule() {
             call.respondText("SIN <br> uri:$uri " +
                     "<br> queryString : $queryString " +
                     "<br> userAgent: $userAgent" +
-                    " <br> cookies: $cookiesString", ContentType.Text.Html)
+                    " <br> cookies: $cookiesString", ContentType.Text.Html,status = HttpStatusCode(value = 600,description = "Ant spider"))
         }
 
         // response samples
