@@ -40,6 +40,7 @@
         <module>netty</module>
         <!--ktor-->
         <module>ktor</module>
+        <module>google-apis</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -230,6 +231,24 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j-log.version}</version>
+            </dependency>
+
+            <!--google packages-->
+            <dependency>
+                <groupId>com.google.api-client</groupId>
+                <artifactId>google-api-client</artifactId>
+                <version>1.27.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.oauth-client</groupId>
+                <artifactId>google-oauth-client-jetty</artifactId>
+                <version>1.27.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.apis</groupId>
+                <artifactId>google-api-services-drive</artifactId>
+                <version>v3-rev136-1.25.0</version>
             </dependency>
 
 
