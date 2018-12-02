@@ -56,9 +56,9 @@ fun findMaxAgePerson() {
     println("${p?.age} --> ${p?.name}")
     println("${p2?.age} --> ${p2?.name}")
 
-    personList.forEach({ element ->
+    personList.forEach { element ->
         println(element)
-    })
+    }
 
     println("===>")
 
@@ -74,8 +74,8 @@ fun main(args: Array<String>) {
     println(sum(1, 2))
     println(sum2(2, 3))
     println(intToString(1))
-    println(funWithLambda(1, 2, { x, y -> x + y }))
-    println(funWithLambda(1, 2, { x, y -> x * y }))
+    println(funWithLambda(1, 2) { x, y -> x + y })
+    println(funWithLambda(1, 2) { x, y -> x * y })
     funException()
 
     findMaxAgePerson()

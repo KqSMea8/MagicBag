@@ -3,9 +3,7 @@ package org.github.helixcs.java;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -79,8 +77,8 @@ public class StringApi {
     }
     public static void main(String[] args) {
 
-        System.out.println(getConfig(psbConfigString,""));
-        System.out.println(getConfig(psbConfigString));
+//        System.out.println(getConfig(psbConfigString,""));
+//        System.out.println(getConfig(psbConfigString));
 //        stringReMatch();
 //        stringSplit();
 //        System.out.println(paddingString("zha","+",10,false));
