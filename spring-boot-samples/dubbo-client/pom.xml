@@ -12,6 +12,7 @@
     <artifactId>dubbo-client</artifactId>
 
     <description>dubbo client</description>
+    <version>${parent.version}</version>
     <properties>
         <java.version>1.8</java.version>
         <java.encoding>utf-8</java.encoding>
@@ -19,6 +20,8 @@
     </properties>
 
     <build>
+        <finalName>${artifactId}-${version}</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

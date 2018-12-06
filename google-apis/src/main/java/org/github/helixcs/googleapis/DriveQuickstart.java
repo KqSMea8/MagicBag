@@ -18,6 +18,7 @@ import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DriveQuickstart {
 
@@ -29,17 +30,6 @@ public class DriveQuickstart {
 
     private static final String credentialPath = "/credentials.json";
 
-
-    public static void main(String[] args) throws GeneralSecurityException, IOException {
-        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-        Drive driveService = new Drive.Builder(httpTransport, JSON_FACTORY, getCredentials(httpTransport))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-
-        FileList result = driveService.files().list().setPageSize(10).setFields("nextPageToken, files(id, name)")
-                .execute();
-        result.getFiles().forEach(file -> System.out.printf("%s (%s)\n", file.getName(), file.getId()));
-    }
 
     private static HttpRequestInitializer getCredentials(NetHttpTransport httpTransport) throws IOException {
         InputStream in = DriveQuickstart.class.getResourceAsStream(credentialPath);
@@ -55,4 +45,17 @@ public class DriveQuickstart {
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
+
+    public static void main(String[] args) throws GeneralSecurityException, IOException {
+        AtomicInteger a  = new AtomicInteger();
+        final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        Drive driveService = new Drive.Builder(httpTransport, JSON_FACTORY, getCredentials(httpTransport))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        FileList result = driveService.files().list().setPageSize(10).setFields("nextPageToken, files(id, name)")
+                .execute();
+        result.getFiles().forEach(file -> System.out.printf("%s (%s)\n", file.getName(), file.getId()));
+    }
+
 }

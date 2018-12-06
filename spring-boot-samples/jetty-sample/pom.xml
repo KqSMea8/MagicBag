@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jetty-sample</artifactId>
-    <version>${magicbox.version}</version>
+    <version>${parent.version}</version>
 
     <dependencies>
         <!-- Compile -->
@@ -65,6 +65,8 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>${artifactId}-${version}</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
