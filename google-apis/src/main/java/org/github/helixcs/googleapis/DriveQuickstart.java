@@ -14,11 +14,13 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.FileList;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DriveQuickstart {
 
@@ -47,7 +49,6 @@ public class DriveQuickstart {
     }
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
-        AtomicInteger a  = new AtomicInteger();
         final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
         Drive driveService = new Drive.Builder(httpTransport, JSON_FACTORY, getCredentials(httpTransport))
                 .setApplicationName(APPLICATION_NAME)
@@ -56,6 +57,8 @@ public class DriveQuickstart {
         FileList result = driveService.files().list().setPageSize(10).setFields("nextPageToken, files(id, name)")
                 .execute();
         result.getFiles().forEach(file -> System.out.printf("%s (%s)\n", file.getName(), file.getId()));
+
+
     }
 
 }

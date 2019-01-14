@@ -26,12 +26,14 @@ public class DiscardServer {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup,workGroup)
                     .channel(NioServerSocketChannel.class)
+                    .localAddress("localhost",port)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline().addLast(new DiscardServerHandler());
                         }
-                    }).option(ChannelOption.SO_BACKLOG,128)
+                    })
+                    .option(ChannelOption.SO_BACKLOG,1024) // 连接队列最大深度
                     .childOption(ChannelOption.SO_KEEPALIVE,true);
 
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
@@ -43,7 +45,7 @@ public class DiscardServer {
     }
 
     public static void main(String[] args) throws  Exception {
-        int port = 8099;
+        int port = 9999;
 
         new DiscardServer(port).run();
 
