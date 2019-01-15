@@ -7,7 +7,7 @@
     <!--关闭启动时检查所有服务-->
     <dubbo:consumer check="false"/>
     <!--组播-->
-    <dubbo:registry address="zookeeper://192.168.31.101:2181" check="false"/>
+    <dubbo:registry address="zookeeper://116.62.40.239:2181" check="false"/>
     <dubbo:protocol name="dubbo"  host="0.0.0.0" port="20880"/>
     <dubbo:service id="dubboSayHelloImplProvider"
                    interface="org.helixcs.springboot.samples.dubboclient.SayHelloInterface"
