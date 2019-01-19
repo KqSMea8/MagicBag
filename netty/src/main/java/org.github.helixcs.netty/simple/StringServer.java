@@ -1,4 +1,4 @@
-package org.github.helixcs.netty;
+package org.github.helixcs.netty.simple;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
