@@ -13,6 +13,18 @@ import java.io.IOException;
  * Date 2018/3/2.
  */
 public class ArgTreeReflectServlet extends HttpServlet {
+
+    public void init() {
+        iniAuth();
+    }
+
+    private void iniAuth() {
+        String userName = getInitParameter("username");
+        String password = getInitParameter("password");
+        System.out.println("username=" + userName + " , " + "password=" + password);
+        return;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("clazz");

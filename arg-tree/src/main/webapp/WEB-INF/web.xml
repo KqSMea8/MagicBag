@@ -8,8 +8,12 @@
         <servlet-name>argTreeReflectServlet</servlet-name>
         <servlet-class>org.github.helixcs.argtree.servlet.ArgTreeReflectServlet</servlet-class>
         <init-param>
-            <param-name>env</param-name>
-            <param-value>dev</param-value>
+            <param-name>username</param-name>
+            <param-value>argTree</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>password</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
