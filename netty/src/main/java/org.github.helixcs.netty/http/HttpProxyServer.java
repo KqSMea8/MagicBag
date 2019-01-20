@@ -1,4 +1,4 @@
-package org.github.helixcs.netty.httpproxy;
+package org.github.helixcs.netty.http;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
@@ -9,7 +9,7 @@ import io.netty.handler.codec.http.*;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
-public class HttpProxy {
+public class HttpProxyServer {
     public static class HttpProxyClientHandle extends ChannelInboundHandlerAdapter {
 
         private Channel clientChannel;
@@ -24,7 +24,7 @@ public class HttpProxy {
             //修改http响应体返回至客户端
             response.content().writeBytes("<script>alert('xxx');</script>".getBytes());
             response.headers().add("test", "from proxy");
-            response.headers().add("netty","proxy");
+            response.headers().add("netty", "proxy");
             clientChannel.writeAndFlush(msg);
         }
     }
@@ -47,15 +47,11 @@ public class HttpProxy {
 
     private static class HttpProxyServerHandle extends ChannelInboundHandlerAdapter {
         private ChannelFuture cf;
-
         private String host;
-
         private int port;
 
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-//            super.channelRead(ctx, msg);
-
             if (msg instanceof FullHttpRequest) {
                 FullHttpRequest request = (FullHttpRequest) msg;
                 String host = request.headers().get("host");
@@ -88,7 +84,7 @@ public class HttpProxy {
                 ChannelFuture cf = bootstrap.connect(temp[0], port);
                 cf.addListener(new ChannelFutureListener() {
                     @Override
-                    public void operationComplete(ChannelFuture future) throws Exception {
+                    public void operationComplete(ChannelFuture future) {
                         if (future.isSuccess()) {
                             future.channel().writeAndFlush(msg);
                         } else {
@@ -98,36 +94,36 @@ public class HttpProxy {
                 });
 
             } else {
-                if (cf == null) {
-                    //连接至目标服务器
-                    Bootstrap bootstrap = new Bootstrap();
-                    bootstrap.group(ctx.channel().eventLoop()) // 复用客户端连接线程池
-                            .channel(ctx.channel().getClass()) // 使用NioSocketChannel来作为连接用的channel类
-                            .handler(new ChannelInitializer() {
-
-                                @Override
-                                protected void initChannel(Channel ch) throws Exception {
-                                    ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
-                                        @Override
-                                        public void channelRead(ChannelHandlerContext ctx0, Object msg) throws Exception {
-                                            ctx.channel().writeAndFlush(msg);
-                                        }
-                                    });
-                                }
-                            });
-                    cf = bootstrap.connect(host, port);
-                    cf.addListener(new ChannelFutureListener() {
-                        public void operationComplete(ChannelFuture future) throws Exception {
-                            if (future.isSuccess()) {
-                                future.channel().writeAndFlush(msg);
-                            } else {
-                                ctx.channel().close();
-                            }
-                        }
-                    });
-                } else {
-                    cf.channel().writeAndFlush(msg);
-                }
+//                if (cf == null) {
+//                    //连接至目标服务器
+//                    Bootstrap bootstrap = new Bootstrap();
+//                    bootstrap.group(ctx.channel().eventLoop()) // 复用客户端连接线程池
+//                            .channel(ctx.channel().getClass()) // 使用NioSocketChannel来作为连接用的channel类
+//                            .handler(new ChannelInitializer() {
+//
+//                                @Override
+//                                protected void initChannel(Channel ch) throws Exception {
+//                                    ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+//                                        @Override
+//                                        public void channelRead(ChannelHandlerContext ctx0, Object msg) throws Exception {
+//                                            ctx.channel().writeAndFlush(msg);
+//                                        }
+//                                    });
+//                                }
+//                            });
+//                    cf = bootstrap.connect(host, port);
+//                    cf.addListener(new ChannelFutureListener() {
+//                        public void operationComplete(ChannelFuture future) throws Exception {
+//                            if (future.isSuccess()) {
+//                                future.channel().writeAndFlush(msg);
+//                            } else {
+//                                ctx.channel().close();
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    cf.channel().writeAndFlush(msg);
+//                }
             }
         }
     }
@@ -149,13 +145,10 @@ public class HttpProxy {
                             ch.pipeline().addLast("httpCodec", new HttpServerCodec());
                             ch.pipeline().addLast("httpObject", new HttpObjectAggregator(65535));
                             ch.pipeline().addLast("serverHandle", new HttpProxyServerHandle());
-
                         }
                     });
-            ChannelFuture f = bootstrap.bind(9999)
-                    .sync();
+            ChannelFuture f = bootstrap.bind(9999).sync();
             f.channel().closeFuture().sync();
-
         } catch (Exception ex) {
 
         } finally {

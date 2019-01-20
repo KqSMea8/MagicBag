@@ -7,7 +7,6 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.CharsetUtil;
 
 import java.net.InetSocketAddress;
 
@@ -46,9 +45,22 @@ public class StringClient {
 ////                                super.channelRead(ctx, msg);
 //                            }
 
+                            byte[] buff = new byte[0];
+
                             @Override
                             protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
-                                System.out.println("> 客户端接收:"+msg.toString(CharsetUtil.UTF_8));
+
+                                while (msg.isReadable()) {
+                                    byte[] _temp = new byte[msg.readableBytes()];
+                                    msg.readBytes(_temp);
+                                    int _old_length = buff.length;
+                                    buff = new byte[_old_length + _temp.length];
+                                    System.arraycopy(_temp, 0, buff, _old_length, _temp.length);
+                                }
+                                String responseString = new String(buff, "utf-8");
+                                buff = new byte[0];
+                                System.out.println("> 客户端接收: \n" + responseString);
+//                                System.out.println("> 客户端接收:" + msg.toString(CharsetUtil.UTF_8));
                             }
                         });
 

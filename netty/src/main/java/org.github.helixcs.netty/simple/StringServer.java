@@ -26,7 +26,7 @@ public class StringServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                            ch.pipeline().addLast("handler",new ChannelInboundHandlerAdapter() {
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
 //                                    super.channelActive(ctx);
@@ -42,6 +42,7 @@ public class StringServer {
                                     String reqString = new String(req, "UTF-8");
                                     System.out.println("> 服务端接受数据:" + reqString);
                                     String res = getRequest(reqString);
+//                                    String res= "fuck";
                                     System.out.println("> 服务端刷新数据:" + res);
 
                                     byte[] resByte = res.getBytes();

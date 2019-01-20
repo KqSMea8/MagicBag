@@ -51,7 +51,7 @@
     </dependencies>
 
     <build>
-        <finalName>arg-tree</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
