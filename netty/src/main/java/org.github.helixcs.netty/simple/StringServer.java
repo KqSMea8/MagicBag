@@ -29,8 +29,6 @@ public class StringServer {
                             ch.pipeline().addLast("handler",new ChannelInboundHandlerAdapter() {
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//                                    super.channelActive(ctx);
-//                                    ctx.
                                     System.out.println("> 服务端激活链接");
                                 }
 

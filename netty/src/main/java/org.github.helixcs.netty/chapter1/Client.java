@@ -7,10 +7,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.CharsetUtil;
 
 public class Client {
     public static void main(String[] args) {
@@ -23,9 +21,11 @@ public class Client {
                     .option(ChannelOption.TCP_NODELAY, true)
                     .handler(new CustomerInitializer());
 
-            ChannelFuture channelFuture = b.connect("localhost", 9999).sync();
+            ChannelFuture channelFuture = b.connect("127.0.0.1", 9999).sync();
+//            channelFuture.channel().writeAndFlush(Unpooled.wrappedBuffer("dadadsa".getBytes()));
+//            channelFuture.channel().writeAndFlush(Unpooled.copiedBuffer("zzzzzz".getBytes()));
             channelFuture.channel().closeFuture().sync();
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
 
         } finally {
             group.shutdownGracefully();
@@ -35,29 +35,34 @@ public class Client {
     private static class CustomerInitializer extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
-            ch.pipeline().addLast(new LineBasedFrameDecoder(1024))
-                    .addLast(new StringDecoder(CharsetUtil.UTF_8))
-                    .addLast(new StringEncoder(CharsetUtil.UTF_8))
-                    .addLast(new SimpleChannelInboundHandler() {
-                        /**
-                         * 当客户端和服务端TCP链路建立成功后， 会调用此方法
-                         */
-                        @Override
-                        public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                            byte[] req = "Hello".getBytes();
-                            ByteBuf byteBuf = Unpooled.buffer(req.length);
-                            byteBuf.writeBytes(req);
-                            ctx.writeAndFlush(byteBuf);
-                        }
+//            ch.pipeline().addLast(new FixedLengthFrameDecoder(1024));
+            ch.pipeline().addLast(new StringDecoder());
+            ch.pipeline().addLast(new StringEncoder());
+            ch.pipeline().addLast(new SimpleChannelInboundHandler() {
 
+                @Override
+                public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                    ctx.writeAndFlush(Unpooled.copiedBuffer("zbbbbzzzzz".getBytes()));
+                }
 
-                        @Override
-                        protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-                            String body = (String) msg;
-                            System.out.println("Now is : " + body);
-                        }
+                @Override
+                protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+                    String res = "";
+                    if (msg instanceof ByteBuf) {
+                        ByteBuf byteBuf = (ByteBuf) msg;
+                        byte[] bytes = new byte[byteBuf.readableBytes()];
+                        byteBuf.readBytes(bytes);
 
-                    });
+                        res = new String(bytes, "UTF-8");
+                    }
+                    if (msg instanceof String){
+                        res = (String)msg;
+                    }
+                    System.out.println("Now is : " + res);
+//                    ctx.channel().closeFuture().sync();
+                }
+
+            });
         }
     }
 
