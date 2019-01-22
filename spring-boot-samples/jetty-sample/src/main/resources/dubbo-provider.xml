@@ -12,6 +12,6 @@
     <dubbo:service id="dubboSayHelloImplProvider"
                    interface="org.helixcs.springboot.samples.dubboclient.SayHelloInterface"
                    ref="dubboSayHelloImpl"
-                   timeout="10000" />
+                   timeout="10000"/>
     <!--<dubbo:reference id="demoServiceRemote" interface="com.alibaba.dubbo.demo.DemoService" />-->
 </beans>

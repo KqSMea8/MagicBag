@@ -7,22 +7,27 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+
+//  FixedLengthFrameDecoder 根据包长度拆分,处理半包问题
+
 public class Server {
     public static void main(String[] args) {
+        int port = 9999;
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
 
         try {
-
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 1024)
                     .childHandler(new CustomerInitalizer());
-            ChannelFuture future = serverBootstrap.bind("127.0.0.1", 9999).sync();
+            ChannelFuture future = serverBootstrap.bind("127.0.0.1", port).sync();
+            System.out.println("netty server has start ...");
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -35,7 +40,13 @@ public class Server {
     private static class CustomerInitalizer extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
-//            ch.pipeline().addLast(new FixedLengthFrameDecoder(1024));
+            // FixedLengthFrameDecoder
+//            ch.pipeline().addLast(new FixedLengthFrameDecoder(3));
+
+            // DelimiterBaseFrameDecoder 特定字符分隔
+            //// 字符串编码和解码
+            ByteBuf delimiter = Unpooled.copiedBuffer("\t".getBytes());
+            ch.pipeline().addLast("framer", new DelimiterBasedFrameDecoder(1024,delimiter));
             ch.pipeline().addLast(new StringDecoder());
             ch.pipeline().addLast(new StringEncoder());
             ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
@@ -53,8 +64,10 @@ public class Server {
                         byteBuf.readBytes(req);
                         reqString = new String(req, "UTF-8");
                     }
-                    if (msg instanceof String){
+                    // StringDecoder
+                    if (msg instanceof String) {
                         reqString = (String) msg;
+                        System.out.println("> server send :"+reqString);
                     }
                     ctx.write(Unpooled.wrappedBuffer(reqString.getBytes()));
                 }

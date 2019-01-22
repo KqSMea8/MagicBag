@@ -22,8 +22,7 @@ public class Client {
                     .handler(new CustomerInitializer());
 
             ChannelFuture channelFuture = b.connect("127.0.0.1", 9999).sync();
-//            channelFuture.channel().writeAndFlush(Unpooled.wrappedBuffer("dadadsa".getBytes()));
-//            channelFuture.channel().writeAndFlush(Unpooled.copiedBuffer("zzzzzz".getBytes()));
+//            channelFuture.channel().writeAndFlush("dakjbdsja|dasda|dsavfsa|daskda|dasjf|fabjsdba|fabsjda|");
             channelFuture.channel().closeFuture().sync();
         } catch (Exception ignored) {
 
@@ -35,18 +34,29 @@ public class Client {
     private static class CustomerInitializer extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
-//            ch.pipeline().addLast(new FixedLengthFrameDecoder(1024));
+            // FixedLengthFrameDecoder
+//            ch.pipeline().addLast("framer", new FixedLengthFrameDecoder(3));
+            // DelimitedFrameDecoder
+//            ByteBuf delimiter = Unpooled.copiedBuffer("\t".getBytes());
+//            ch.pipeline().addLast("framer", new DelimiterBasedFrameDecoder(180,delimiter));
+            // 字符串编码和解码
             ch.pipeline().addLast(new StringDecoder());
             ch.pipeline().addLast(new StringEncoder());
-            ch.pipeline().addLast(new SimpleChannelInboundHandler() {
+            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                private static final String REQ = "LOUYYUTING netty. \t";
 
                 @Override
                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
-                    ctx.writeAndFlush(Unpooled.copiedBuffer("zbbbbzzzzz".getBytes()));
+//                    ctx.writeAndFlush(Unpooled.copiedBuffer("zbbbvhgvhvhcgcgxfgxgfxgfxfdgxbzzzzz".getBytes()));
+//                    String reqString = "dakjbdsja|dasda|dsavfsa|daskda|dasjf|fabjsdba|fabsjda";
+
+                    for(int i=0;i<10;i++){
+                        ctx.writeAndFlush(Unpooled.copiedBuffer(REQ.getBytes()));
+                    }
                 }
 
                 @Override
-                protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+                public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                     String res = "";
                     if (msg instanceof ByteBuf) {
                         ByteBuf byteBuf = (ByteBuf) msg;
@@ -55,11 +65,12 @@ public class Client {
 
                         res = new String(bytes, "UTF-8");
                     }
-                    if (msg instanceof String){
-                        res = (String)msg;
+
+
+                    if (msg instanceof String) {
+                        res = (String) msg;
                     }
                     System.out.println("Now is : " + res);
-//                    ctx.channel().closeFuture().sync();
                 }
 
             });
