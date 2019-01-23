@@ -3,14 +3,12 @@ package org.github.helixcs.netty.chapter2;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
+import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
 // 自定义解码器
-public class CustomerDecoder extends ByteToMessageCodec {
-    @Override
-    protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
-    }
+public class CustomerDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List out) throws Exception {
@@ -26,7 +24,8 @@ public class CustomerDecoder extends ByteToMessageCodec {
 
 
         // 读取消息内容
-        byte[] content = in.readBytes(in.readableBytes()).array();
+        byte[] content =  new byte[in.readableBytes()];
+        in.readBytes(content);
         String contentString = new String(content);
         CustomerProtocol customerProtocol = new CustomerProtocol(header,contentString);
         out.add(customerProtocol);

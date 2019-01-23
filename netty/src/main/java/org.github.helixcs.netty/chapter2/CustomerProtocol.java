@@ -40,6 +40,7 @@ public class CustomerProtocol implements Serializable {
         public void setSessionId(String sessionId) {
             this.sessionId = sessionId;
         }
+
     }
 
     private Header header;

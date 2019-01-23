@@ -9,14 +9,14 @@ public class ClientHandler extends SimpleChannelInboundHandler<CustomerProtocol>
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("> Client actived");
-        int version = 1;
-        String sessionId = UUID.randomUUID().toString();
-        String content = "I'm the luck protocol!";
-
-        CustomerProtocol.Header header = new CustomerProtocol.Header(version, content.length(), sessionId);
-        CustomerProtocol message = new CustomerProtocol(header, content);
-        ctx.writeAndFlush(message);
-        ctx.channel().close();
+//        int version = 1;
+//        String sessionId = UUID.randomUUID().toString();
+//        String content = "I'm the luck protocol!";
+//
+//        CustomerProtocol.Header header = new CustomerProtocol.Header(version, content.length(), sessionId);
+//        CustomerProtocol message = new CustomerProtocol(header, content);
+//        ctx.writeAndFlush(message);
+//        ctx.channel().close();
     }
 
 
