@@ -11,6 +11,8 @@ import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+import java.nio.charset.StandardCharsets;
+
 
 //  FixedLengthFrameDecoder 根据包长度拆分,处理半包问题
 
@@ -41,11 +43,11 @@ public class Server {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
             // FixedLengthFrameDecoder
-//            ch.pipeline().addLast(new FixedLengthFrameDecoder(3));
+            //ch.pipeline().addLast(new FixedLengthFrameDecoder(3));
 
             // DelimiterBaseFrameDecoder 特定字符分隔
             //// 字符串编码和解码
-            ByteBuf delimiter = Unpooled.copiedBuffer("\t".getBytes());
+            ByteBuf delimiter = Unpooled.copiedBuffer("|".getBytes());
             ch.pipeline().addLast("framer", new DelimiterBasedFrameDecoder(1024,delimiter));
             ch.pipeline().addLast(new StringDecoder());
             ch.pipeline().addLast(new StringEncoder());
@@ -62,13 +64,15 @@ public class Server {
                         ByteBuf byteBuf = (ByteBuf) msg;
                         byte[] req = new byte[byteBuf.readableBytes()];
                         byteBuf.readBytes(req);
-                        reqString = new String(req, "UTF-8");
+                        reqString = new String(req, StandardCharsets.UTF_8);
                     }
                     // StringDecoder
                     if (msg instanceof String) {
                         reqString = (String) msg;
-                        System.out.println("> server send :"+reqString);
+                        System.out.println("> send receive :"+reqString);
                     }
+                    reqString =  reqString+ " | msg from netty sever \n";
+                    System.out.println("> server send :"+reqString);
                     ctx.write(Unpooled.wrappedBuffer(reqString.getBytes()));
                 }
 

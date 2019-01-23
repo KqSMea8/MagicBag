@@ -10,6 +10,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+import java.nio.charset.StandardCharsets;
+
 public class Client {
     public static void main(String[] args) {
         EventLoopGroup group = new NioEventLoopGroup();
@@ -43,7 +45,6 @@ public class Client {
             ch.pipeline().addLast(new StringDecoder());
             ch.pipeline().addLast(new StringEncoder());
             ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
-                private static final String REQ = "LOUYYUTING netty. \t";
 
                 @Override
                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -51,7 +52,7 @@ public class Client {
 //                    String reqString = "dakjbdsja|dasda|dsavfsa|daskda|dasjf|fabjsdba|fabsjda";
 
                     for(int i=0;i<10;i++){
-                        ctx.writeAndFlush(Unpooled.copiedBuffer(REQ.getBytes()));
+                        ctx.writeAndFlush(Unpooled.copiedBuffer("msg from client |".getBytes()));
                     }
                 }
 
@@ -63,14 +64,14 @@ public class Client {
                         byte[] bytes = new byte[byteBuf.readableBytes()];
                         byteBuf.readBytes(bytes);
 
-                        res = new String(bytes, "UTF-8");
+                        res = new String(bytes, StandardCharsets.UTF_8);
                     }
 
 
                     if (msg instanceof String) {
                         res = (String) msg;
                     }
-                    System.out.println("Now is : " + res);
+                    System.out.println("Now is : " + res +"\n");
                 }
 
             });
