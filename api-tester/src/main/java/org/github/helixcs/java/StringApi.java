@@ -75,8 +75,18 @@ public class StringApi {
         }
         return resultJson.toJSONString();
     }
-    public static void main(String[] args) {
 
+    private String throwError() throws Exception {
+        try{
+            throw new Error("error");
+        }catch (Error ignored){
+
+        }
+        return "dadsa";
+    }
+    public static void main(String[] args) throws Exception {
+        StringApi a = new StringApi();
+        System.out.println(a.throwError());
 //        System.out.println(getConfig(psbConfigString,""));
 //        System.out.println(getConfig(psbConfigString));
 //        stringReMatch();

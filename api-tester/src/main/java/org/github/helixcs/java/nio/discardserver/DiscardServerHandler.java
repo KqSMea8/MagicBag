@@ -1,92 +1,54 @@
 package org.github.helixcs.java.nio.discardserver;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.ReferenceCountUtil;
+import io.netty.util.CharsetUtil;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * @Author: helix
  * @Time:9/18/18
  * @Site: http://iliangqunru.bitcron.com/
  */
-public class DiscardServerHandler  extends ChannelInboundHandlerAdapter{
-
-    @Override
-    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        // channel 注册
-        super.channelRegistered(ctx);
-    }
-
-    @Override
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-        // channel 不再注册
-        super.channelUnregistered(ctx);
-    }
+public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        // channel 激活
-//        super.channelActive(ctx);
+        System.out.println("> 服务端连接成功");
+        ctx.writeAndFlush(Unpooled.copiedBuffer("服务端连接成功",CharsetUtil.UTF_8));
+    }
 
-        final  ByteBuf time = ctx.alloc().buffer(4);
-        time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
-        final ChannelFuture future = ctx.writeAndFlush(time);
-        future.addListener(new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                System.out.println("==> server time has send .");
-                ctx.close();
-            }
-        });
+
+        @Override
+    public void channelRead(ChannelHandlerContext ctx,Object msg) throws UnsupportedEncodingException {
+        System.out.println("> server 读取数据……");
+        //读取数据
+        ByteBuf buf = (ByteBuf) msg;
+        byte[] req = new byte[buf.readableBytes()];
+        buf.readBytes(req);
+        String body = new String(req, "UTF-8");
+        System.out.println("接收客户端数据:" + body);
+        //向客户端写数据
+        System.out.println(">server向client发送数据");
+        ByteBuf resp = Unpooled.copiedBuffer("fuck".getBytes());
+        ctx.write(resp);
+        ctx.flush();
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        // channel 不再激活
-        super.channelInactive(ctx);
+    public void channelReadComplete(ChannelHandlerContext ctx){
+        System.out.println("server 读取数据完毕..");
+        ctx.flush();//刷新后才将数据发出到SocketChannel
+
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // channel 读
-        // 丢弃报文
-        //((ByteBuf)msg).release();
-
-//        ByteBuf in = (ByteBuf) msg;
-//        try{
-//            while (in.isReadable()){
-//                System.out.println((char)in.readByte());
-//                System.out.flush();
-//            }
-//        }finally {
-//            ReferenceCountUtil.release(msg);
-//        }
-
-//        ctx.write(msg);
-//        ctx.flush();
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        super.channelReadComplete(ctx);
-    }
-
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        super.userEventTriggered(ctx, evt);
-    }
-
-    @Override
-    public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
-        super.channelWritabilityChanged(ctx);
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx,Throwable cause){
         cause.printStackTrace();
         ctx.close();
+
     }
 }

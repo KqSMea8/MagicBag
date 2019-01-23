@@ -1,5 +1,6 @@
 package org.github.helixcs.algorithm.sort;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
@@ -8,7 +9,7 @@ import java.util.Arrays;
  * @Time:9/6/18
  * @Site: http://iliangqunru.bitcron.com/
  */
-public class Sorted {
+public class Sorted implements Serializable {
     private static  void bubbleSort(int p []){
         for(int i = 0;i<p.length-1;i++){
             for(int j = i+1;j<p.length-1;j++){

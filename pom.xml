@@ -18,10 +18,13 @@
         <jna.version>4.5.1</jna.version>
         <commons.version>3.4</commons.version>
         <commons-codec.version>1.10</commons-codec.version>
+        <commons-io.version>2.5</commons-io.version>
+        <fastjson.version>1.2.47</fastjson.version>
         <mybatis.version>3.4.4</mybatis.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
         <netty-all.version>4.1.28.Final</netty-all.version>
         <javassist.version>3.19.0-GA</javassist.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <dubbo.version>2.4.9</dubbo.version>
         <httpcomponents.version>4.5.6</httpcomponents.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
@@ -29,6 +32,7 @@
         <logback-classic.version>1.2.3</logback-classic.version>
         <slf4j-log.version>1.7.25</slf4j-log.version>
         <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.16.20</lombok.version>
         <magicbox.version>1.0-SNAPSHOT</magicbox.version>
     </properties>
     <modules>
@@ -43,6 +47,8 @@
         <!--ktor-->
         <module>ktor</module>
         <module>google-apis</module>
+        <!--arg-tree-->
+        <module>arg-tree</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -70,6 +76,11 @@
             <dependency>
                 <groupId>org.github.helixcs</groupId>
                 <artifactId>ktor</artifactId>
+                <version>${magicbox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.github.helixcs</groupId>
+                <artifactId>arg-tree</artifactId>
                 <version>${magicbox.version}</version>
             </dependency>
 
@@ -134,7 +145,7 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.5</version>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <dependency>
@@ -145,7 +156,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.47</version>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!--mybatis-->
@@ -174,6 +185,12 @@
                 <version>${javassist.version}</version>
             </dependency>
 
+            <!--servlet-->
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.github.javaparser</groupId>
@@ -206,7 +223,6 @@
             </dependency>
 
             <!--log-->
-
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
@@ -233,6 +249,13 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j-log.version}</version>
+            </dependency>
+
+            <!--lombok-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
             <!--google packages-->

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>复杂报文属性结构图</title>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+</head>
+<body>
+<div class="">
+    <h2 style="text-align: center">复杂报文属性结构图</h2>
+</div>
+<div class="action">
+    <span>请输入全类名：</span>
+    <input id="full_path" type="text" style="width: 800px" title="">
+    <button id="submit">查询</button>
+</div>
+<div id="myCharts" style="height: 600px;width: 100%"></div>
+
+<div class="footer" style="text-align: center;color: #afafaf;">Powered By Echarts</div>
+
+<script>
+
+
+
+    let waterCanvas = () => {
+        const waterMarkText = 'ArgTree';
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.height = 100;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.globalAlpha = 0.2;
+        ctx.font = '20px Microsoft Yahei';
+        ctx.translate(50, 50);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillText(waterMarkText, 0, 0);
+        return canvas;
+    }
+
+    $(function(){
+        waterCanvas();
+    });
+
+    $("#submit").on('click', (event) => {
+        $("#myCharts").empty().removeAttr('_echarts_instance_');
+        let myChart = echarts.init(document.getElementById('myCharts'));
+        let fullName = $("#full_path").val();
+        myChart.showLoading();
+        $.get('/argTreeReflectServlet', {"clazz": fullName}, function (data) {
+            myChart.hideLoading();
+            myChart.setOption(option = {
+                backgroundColor: {
+                    type: 'pattern',
+                    image: waterCanvas(),
+                    repeat: 'repeat'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        saveAsImage: {show: true,pixelRatio :5}
+                    }
+                },
+                series: [
+                    {
+                        type: 'tree',
+
+                        data: [data],
+
+                        top: '1%',
+                        left: '7%',
+                        bottom: '1%',
+                        right: '20%',
+
+                        symbolSize: 7,
+
+                        label: {
+                            normal: {
+                                position: 'top',
+                                verticalAlign: 'middle',
+                                align: 'right',
+                                fontSize: 10
+                            }
+                        },
+
+                        leaves: {
+                            label: {
+                                normal: {
+                                    position: 'right',
+                                    verticalAlign: 'middle',
+                                    align: 'left'
+                                }
+                            }
+                        },
+
+                        expandAndCollapse: true,
+                        animationDuration: 550,
+                        animationDurationUpdate: 750
+                    }
+                ]
+            });
+        });
+    })
+
+
+</script>
+
+</body>
+</html>
