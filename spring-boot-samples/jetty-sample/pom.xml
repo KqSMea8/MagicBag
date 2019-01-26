@@ -58,11 +58,11 @@
             <version>0.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.github.helixcs</groupId>
-            <artifactId>dubbo-client</artifactId>
-            <version>1.0</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.github.helixcs</groupId>-->
+            <!--<artifactId>dubbo-client</artifactId>-->
+            <!--<version>1.0</version>-->
+        <!--</dependency>-->
     </dependencies>
     <build>
         <finalName>${artifactId}-${version}</finalName>
@@ -71,6 +71,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

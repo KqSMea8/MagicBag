@@ -10,7 +10,6 @@ public class CustomerClientInitializer extends ChannelInitializer {
         ch.pipeline().addLast(new CustomerEncoder());
         ch.pipeline().addLast(new CustomerDecoder());
         ch.pipeline().addLast(new ClientHandler());
-
-
+//        ch.pipeline().addLast(new ClientOutHandler());
     }
 }
