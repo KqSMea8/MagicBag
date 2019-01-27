@@ -1,5 +1,7 @@
 package org.github.helixcs.netty.chapter4;
 
+import java.net.InetSocketAddress;
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -16,10 +18,12 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
+import lombok.Data;
 
 import static io.netty.handler.timeout.IdleState.WRITER_IDLE;
 
-public class Client {
+@Data
+public class C4Client {
 
     private String host;
 
@@ -31,71 +35,11 @@ public class Client {
 
     private ChannelFuture channelFuture;
 
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public Bootstrap getBootstrap() {
-        return bootstrap;
-    }
-
-    public void setBootstrap(Bootstrap bootstrap) {
-        this.bootstrap = bootstrap;
-    }
-
-    public ChannelFuture getChannelFuture() {
-        return channelFuture;
-    }
-
-    public void setChannelFuture(ChannelFuture channelFuture) {
-        this.channelFuture = channelFuture;
-    }
-
-    public Client(String host, int port, String clientId) {
+    public C4Client(String host, int port, String clientId) {
         this.host = host;
         this.port = port;
         this.clientId = clientId;
         doConnection(host, port);
-    }
-
-    public Client(String host, int port, Bootstrap bootstrap, ChannelFuture channelFuture) {
-        this.host = host;
-        this.port = port;
-        this.bootstrap = bootstrap;
-        this.channelFuture = channelFuture;
-    }
-
-    private static class HeartbeatHandler extends ChannelInboundHandlerAdapter {
-        @Override
-        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-            System.out.println("> client 循环心跳检查:" + new Date());
-            if (evt instanceof IdleStateEvent) {
-                IdleStateEvent event = (IdleStateEvent)evt;
-                if (event.state() == WRITER_IDLE) {
-                    ctx.writeAndFlush("hohoho");
-                }
-            }
-        }
     }
 
     private void doConnection(String host, int port) {
@@ -110,17 +54,52 @@ public class Client {
                     ch.pipeline().addLast(new StringEncoder());
                     ch.pipeline().addLast(new StringDecoder());
                     ch.pipeline().addLast(new HeartbeatHandler());
-                    ch.pipeline().addLast(new ClientRegisterHandler(clientId));
+                    ch.pipeline().addLast(new C4ClientHandler());
                 }
             });
         try {
-            channelFuture = bootstrap.connect(host, port).sync();
+            ChannelFuture tempF = bootstrap.connect(host, port).sync();
+            this.setChannelFuture(tempF);
+            //channelFuture.channel().writeAndFlush("Hello World");
+            //channelFuture.channel().writeAndFlush(Unpooled.copiedBuffer("Hello Netty".getBytes()));
             //future.channel().close();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } finally {
+            if (null != channelFuture) {
+                channelFuture.channel().closeFuture();
+            }
             workGroup.shutdownGracefully();
+        } finally {
+            //workGroup.shutdownGracefully();
         }
+
+    }
+
+    private static class HeartbeatHandler extends ChannelInboundHandlerAdapter {
+        @Override
+        public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+            System.out.println("> client 循环心跳检查:" + new Date());
+            if (evt instanceof IdleStateEvent) {
+                IdleStateEvent event = (IdleStateEvent)evt;
+                if (event.state() == WRITER_IDLE) {
+                    ctx.writeAndFlush("ping");
+                }
+            }
+        }
+
+        @Override
+        public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+            InetSocketAddress address =(InetSocketAddress)ctx.channel().remoteAddress();
+            String clientInfo = address.getHostName()+"_"+address.getHostString()+":"+address.getPort();
+            System.out.println(MessageFormat.format("> C4Client Heartbeat get msg :{0} from {1}" , msg.toString(),clientInfo));
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+
+        C4Client c4Client = new C4Client("127.0.0.1", 9999, "clientid");
+        Thread.sleep(5000);
+        c4Client.getChannelFuture().channel().writeAndFlush("hello,world");
 
     }
 

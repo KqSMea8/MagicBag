@@ -8,9 +8,13 @@
   -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--<import resource="dubbo-provider.xml"/>-->
     <!--<import resource="classpath:dubbo-consumer.xml"/>-->
+
+    <bean id="c4Server" class="org.github.helixcs.netty.chapter4.C4Sever">
+        <constructor-arg value="9999"/>
+    </bean>
 </beans>
